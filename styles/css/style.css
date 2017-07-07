@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+}
+.container-parent {
+    width: 70%;
+    height: auto;
+    min-height: 600px;
+    position: relative;
+    top: calc(50vh - 300px);
+    left: calc(50vw - 35%); 
+    border: 1px solid black;
+}
+.container {
+    width: 100%;
+    height: auto;
+}
+.container .header {
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+}
+.container .categorie {
+    width: 100%;
+    height: auto;
+}
+.container .categorie .header {
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+}
+.container .categorie .subject {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.container .categorie .subject div {
+    background-color: black;
+    width: 33%;
+    height: 50px;
+}
+.red {
+    background-color: red;
+}
+.blue {
+    background-color: blue;
+}
+.green {
+    background-color: green;
+}
