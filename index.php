@@ -2,13 +2,8 @@
 session_start();
 include_once 'configuration/config.php';
 include_once 'model/fonctions.php';
+$page = getPage();
 
-
-if ( isset($_GET['page']) ){
-    $page = $_GET['page'];
-} else {
-    $page = "accueil";
-}
 
 
 switch($page) {
@@ -16,6 +11,7 @@ switch($page) {
         include 'view/accueil.php';
     break;
     case "profil":
+        $utilisateur = loadUsersProfil($_GET['id']);
         include 'view/profil.php';
     break;
 }

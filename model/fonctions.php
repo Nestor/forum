@@ -1,4 +1,14 @@
 <?php
+
+    function getPage(){
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+        }else{
+            $page = "accueil";
+        }
+        return $page;
+    }
+
     function userConnexion($username, $password){
         include '../configuration/config.php';
 
@@ -26,5 +36,21 @@
         }
 
 
+    }
+
+    function loadUsersProfil($id) {
+         include 'configuration/config.php';
+         $object = $connexion->prepare('SELECT * FROM users WHERE id=:id');
+         $object->execute(array(
+             'id' => $id
+         ));
+         $user = $object->fetchAll(PDO::FETCH_ASSOC);
+         $result = $object->rowCount();
+
+         if (!$result == 0) {
+             return $user;
+         } else {
+             echo 'Aucune données pour ce compte';
+         }
     }
 ?>

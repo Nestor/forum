@@ -11,11 +11,18 @@
 </head>
 <body>
     <div class="container-parent">
-
         <!-- Espace membres -->
-        <?php if(isset($user)) { ?>
+        <?php if(isset($_SESSION['user'])) { ?>
             <div class="container red">
-                <div class="header">Profil de <?= $user['username'] ?></div>
+                <?php
+                    if (isset($utilisateur)) {
+                        echo 'Username: '.$utilisateur[0]['username'].'<br/>';
+                        echo 'Email: '.$utilisateur[0]['email'].'<br/>';
+                        echo '<img src="../Forum/styles/'.$utilisateur[0]['path_avatar'].'" alt="avatar" style="width: 200px;height: 200px;"/><br/>';
+                        echo 'Compte créer le: '.$utilisateur[0]['date_creation'].'<br/>';
+                    }
+                ?>
+                <!--<div class="header">Profil de <?= $utilisateur[0]['username'] ?></div>-->
             </div>
         <?php } else { ?>
             <div class="container red">

@@ -15,7 +15,7 @@
         <!-- Espace membres -->
         <div class="container red">
             <?php if (isset($_SESSION['user'])) { ?>
-                <div class="header">Bienvenue <?= $_SESSION['user']['username'] ?> | <a href="services/disconnectService.php">Se déconnecter</a></div>
+                <div class="header">Bienvenue <a href="index.php?page=profil&id=<?=$_SESSION['user']['id']?>" title="Profil page"><?= $_SESSION['user']['username'] ?></a> | <a href="services/disconnectService.php" title="Disconnect">Se déconnecter</a></div>
             <?php } else { ?>
                 <div class="header">Espace membres</div>
                 <?php
