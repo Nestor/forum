@@ -78,4 +78,33 @@
             header('location: ../index.php?page=register&etat=exist');
         }
     }
+
+    function GetForumData() {
+        include '../configuration/config.php';
+        //$object = $connexion->prepare('SELECT * FROM user WHERE id=:userId');
+        
+        // SELECT j.nom nom_jeu, p.prenom prenom_proprietaire
+        // FROM proprietaires p, jeux_video j
+        // WHERE j.ID_proprietaire = p.ID
+
+
+        // SELECT j.nom nom_jeu, p.prenom prenom_proprietaire
+        // FROM proprietaires p
+        // INNER JOIN jeux_video j
+        // ON j.ID_proprietaire = p.ID
+
+        // SELECT * FROM categories c INNER JOIN sous_categories s ON s.id_categories= c.id
+        // SELECT c.categorie FROM categories c INNER JOIN sous_categories s ON s.id_categories = c.id
+        $object = $connexion->prepare('SELECT * FROM categories c INNER JOIN sous_categories s ON s.id_categories= c.id');
+        // SELECT id_categories 
+        $object->execute();
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+
+
+        print_r($data);
+
+
+        echo $data[0]['categorie'].'->'.$data[0]['categorie'];
+    }
+    GetForumData();
 ?>
