@@ -14,5 +14,8 @@ switch($page) {
         $utilisateur = loadUsersProfil($_GET['id']);
         include 'view/profil.php';
     break;
+    case "register":
+        include 'view/register.php';
+    break;
 }
 ?>

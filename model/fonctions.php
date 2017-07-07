@@ -53,4 +53,29 @@
              echo 'Aucune données pour ce compte';
          }
     }
+
+    function userRegister($username, $password, $email){
+        include '../configuration/config.php';
+        $date_creation = date("d/m/y");
+
+
+        $object = $connexion->prepare('SELECT * FROM users WHERE username=:username');
+        $object->execute(array(
+            "username" => $username
+        ));
+
+        if (!$object->rowCount() == 1) {
+            $object = $connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, path_avatar=:avatar, date_creation=:date_create');
+            $object->execute(array(
+                "username" => $username,
+                "password" => $password,
+                "email" => $email,
+                "avatar" => "images/empty_avatar.png",
+                "date_create" => $date_creation
+            ));
+            header('location: ../index.php?page=register&etat=success');
+        } else {
+            header('location: ../index.php?page=register&etat=exist');
+        }
+    }
 ?>

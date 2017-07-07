@@ -58,6 +58,7 @@ body {
 }
 /* ---------------------------- */
 
+/* Couleur de fond */
 .red {
     background-color: red;
 }
@@ -67,3 +68,4 @@ body {
 .green {
     background-color: green;
 }
+/* ---------------------------- */

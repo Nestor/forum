@@ -13,16 +13,18 @@
     <div class="container-parent">
 
         <!-- Espace membres -->
-        <div class="container red">
+        <div class="container green">
             <?php if (isset($_SESSION['user'])) { ?>
                 <div class="header">Bienvenue <a href="index.php?page=profil&id=<?=$_SESSION['user']['id']?>" title="Profil page"><?= $_SESSION['user']['username'] ?></a> | <a href="services/disconnectService.php" title="Disconnect">Se déconnecter</a></div>
             <?php } else { ?>
                 <div class="header">Espace membres</div>
                 <?php
-                    switch($_GET['etat']) {
-                        case "error":
-                            echo 'Mauvais nom de compte ou mot de passe';
-                        break;
+                    if (isset($_GET['etat'])) {
+                        switch($_GET['etat']) {
+                            case "error":
+                                echo 'Mauvais nom de compte ou mot de passe';
+                            break;
+                        }
                     }
                 ?>
                 <form action="services/loginService.php" method="post">
@@ -34,6 +36,7 @@
 
                     <input type="submit" value="Envoyer" />
                 </form>
+                <a href="index.php?page=register">Inscription</a>
             <?php } ?>
         </div>
 

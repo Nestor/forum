@@ -14,6 +14,7 @@
         <!-- Espace membres -->
         <?php if(isset($_SESSION['user'])) { ?>
             <div class="container red">
+                <div class="header green">Profil de <?= $utilisateur[0]['username'] ?><a href="index.php"><-|</a></div>
                 <?php
                     if (isset($utilisateur)) {
                         echo 'Username: '.$utilisateur[0]['username'].'<br/>';
