@@ -1,8 +1,5 @@
 <?php
-
-/*
-Dans une page additionnel créer un formulaire qui va vers une page service
-avec un feedback 
-*/
-
+    session_start();
+    include '../model/fonctions.php';
+    userConnexion($_POST['account'], $_POST['password']);
 ?>

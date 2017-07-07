@@ -15,5 +15,8 @@ switch($page) {
     case "accueil":
         include 'view/accueil.php';
     break;
+    case "profil":
+        include 'view/profil.php';
+    break;
 }
 ?>

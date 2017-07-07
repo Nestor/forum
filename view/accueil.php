@@ -14,16 +14,27 @@
 
         <!-- Espace membres -->
         <div class="container red">
-            <div class="header">Espace membres</div>
-            <form action="<!-- Service -->" method="post">
-                <label>Nom de compte</label>
-                <input type="text" name="account" /><br/>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <div class="header">Bienvenue <?= $_SESSION['user']['username'] ?> | <a href="services/disconnectService.php">Se déconnecter</a></div>
+            <?php } else { ?>
+                <div class="header">Espace membres</div>
+                <?php
+                    switch($_GET['etat']) {
+                        case "error":
+                            echo 'Mauvais nom de compte ou mot de passe';
+                        break;
+                    }
+                ?>
+                <form action="services/loginService.php" method="post">
+                    <label>Nom de compte</label>
+                    <input type="text" name="account" /><br/>
 
-                <label>Mot de passe</label>
-                <input type="password" name="password" /><br/>
+                    <label>Mot de passe</label>
+                    <input type="password" name="password" /><br/>
 
-                <input type="submit" value="Envoyer" />
-            </form> 
+                    <input type="submit" value="Envoyer" />
+                </form>
+            <?php } ?>
         </div>
 
         <!-- Other 
@@ -34,25 +45,40 @@
 
         <!-- Forum container -->
         <div class="container">
-            <?php
-                $object = $connexion->prepare('SELECT * FROM categories');
-                $object->execute();
-                $Categories = $object->fetchAll(PDO::FETCH_ASSOC);
-                foreach($Categories as $categorie) {
-                    $object_cat = $connexion->prepare('SELECT * FROM sous_categories WHERE id_categories=:id_cat');
-                    $object_cat->execute(array(
-                        "id_cat" => $Categories['id']
-                    ));
-                    $sous_Categories = $object_cat->fetchAll(PDO::FETCH_ASSOC);
-                    var_dump($sous_Categories);
-                    echo '
-                    <div class="categorie">
-                        <div class="header red"><p>'.$categorie['categorie'].'</p></div>
-                        
-                    </div>
-                    ';
-                }
-            ?>
+            <div class="categorie">
+                <div class="header red"><p>Catégorie 1</p></div>
+                <div class="subject">
+                    <div class="name"> Sujet numéro 1</div>
+                    <div class="total_msg"> 10 </div>
+                    <div class="last_subject">Midi les zouzou - par Zouki</div>
+                </div>
+                <div class="subject">
+                    <div class="name"> Sujet numéro 1</div>
+                    <div class="total_msg"> 10 </div>
+                    <div class="last_subject">Midi les zouzou - par Zouki</div>
+                </div>
+            </div>
+            <div class="categorie">
+                <div class="header red"><p>Catégorie 1</p></div>
+                <div class="subject">
+                    <div class="name"> Sujet numéro 1</div>
+                    <div class="total_msg"> 10 </div>
+                    <div class="last_subject">Midi les zouzou - par Zouki</div>
+                </div>
+            </div>
+            <div class="categorie">
+                <div class="header red"><p>Catégorie 1</p></div>
+                <div class="subject">
+                    <div class="name"> Sujet numéro 1</div>
+                    <div class="total_msg"> 10 </div>
+                    <div class="last_subject">Midi les zouzou - par Zouki</div>
+                </div>
+                <div class="subject">
+                    <div class="name"> Sujet numéro 1</div>
+                    <div class="total_msg"> 10 </div>
+                    <div class="last_subject">Midi les zouzou - par Zouki</div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="scripts/script.js"></script>
