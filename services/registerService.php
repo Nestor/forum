@@ -8,6 +8,9 @@
 
         userRegister($username, $password, $email);
     } else {
+        // Alfonso: essaie de mettre un die après un header même si ici ça n'a pas de sens car il n'y a pas de code après
+        // c'est rare mais les script parfois mette trop de temps à s'executer et après un header() on ne veut pas
+        // que ce qui a derrière s'execute. Donc par reflexe je met un die() toujours après un header()
         header('location: ../Forum/index.php?page=register&etat=error');
     }
 

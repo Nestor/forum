@@ -10,6 +10,14 @@
     }
 
     function userConnexion($username, $password){
+        /*
+        * C'est bien vu de vouloir séparer la connexion du reste des fonction mais c'est plutot les crédentielles user
+        * que tu veux mettre dans le fichier config et pas forcément la connexion
+        * tu peux faire ici dans fonctions.php une fonction getConnexion() qui te donnera la connexion
+        * ensuite si tu veux avoir les crédentiel dans le dossier config tu auras un cas de figure pour l'index.php
+        * et pour les services car les chemins relatifs ne seront pas les même.
+        * dans getConnexion() tu peux scanner les dossier et faire deux cas de figure je pense.
+        */
         include '../configuration/config.php';
 
         if (!empty($username) && !empty($password)) {
@@ -21,6 +29,12 @@
             $user = $object->fetchAll(PDO::FETCH_ASSOC);
 
             if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
+                // Alfonso: peut être tu devrais setter la session
+                // dans le service plutot. C'est sur comment tu as fait laisse le service super clean
+                // mais du coup on ne sait pas ce que fait exactement le service.
+                // donc tous ce qui est dans le if() et les redirections en passant par le setting de la session
+                // doit être fait dans  le service.
+                // également la construction du feedback
                 $_SESSION['user'] = [
                     'id' => $user[0]['id'],
                     'username' => $user[0]['username']
@@ -106,5 +120,6 @@
 
         echo $data[0]['categorie'].'->'.$data[0]['categorie'];
     }
+    /* Alfonso: je suppose que cet appel est pour tester ta fonction. Mais évidemment ça ne doit pas être ici */
     GetForumData();
 ?>
