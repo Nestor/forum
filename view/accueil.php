@@ -15,7 +15,12 @@
         <!-- Espace membres -->
         <div class="container green">
             <?php if (isset($_SESSION['user'])) { ?>
-                <div class="header">Bienvenue <a href="index.php?page=profil&id=<?=$_SESSION['user']['id']?>" title="Profil page"><?= $_SESSION['user']['username'] ?></a> | <a href="services/disconnectService.php" title="Disconnect">Se déconnecter</a></div>
+                <div class="header">Bienvenue 
+                <a href="index.php?page=profil&id=<?=$_SESSION['user']['id']?>" title="Profil page"><?= $_SESSION['user']['username'] ?></a>
+                 | 
+                <a href="index.php?page=mp&id=<?=$_SESSION['user']['id']?>" title="Message privée">Message privée</a>
+                 | 
+                <a href="services/disconnectService.php" title="Disconnect">Se déconnecter</a></div>
             <?php } else { ?>
                 <div class="header">Espace membres</div>
                 <?php
@@ -48,41 +53,9 @@
 
         <!-- Forum container -->
         <div class="container">
-            <div class="categorie">
-                <div class="header red"><p>Catégorie 1</p></div>
-                <div class="subject">
-                    <div class="name"> Sujet numéro 1</div>
-                    <div class="total_msg"> 10 </div>
-                    <div class="last_subject">Midi les zouzou - par Zouki</div>
-                </div>
-                <div class="subject">
-                    <div class="name"> Sujet numéro 1</div>
-                    <div class="total_msg"> 10 </div>
-                    <div class="last_subject">Midi les zouzou - par Zouki</div>
-                </div>
-            </div>
-            <div class="categorie">
-                <div class="header red"><p>Catégorie 1</p></div>
-                <div class="subject">
-                    <div class="name"> Sujet numéro 1</div>
-                    <div class="total_msg"> 10 </div>
-                    <div class="last_subject">Midi les zouzou - par Zouki</div>
-                </div>
-            </div>
-            <div class="categorie">
-                <div class="header red"><p>Catégorie 1</p></div>
-                <div class="subject">
-                    <div class="name"> Sujet numéro 1</div>
-                    <div class="total_msg"> 10 </div>
-                    <div class="last_subject">Midi les zouzou - par Zouki</div>
-                </div>
-                <div class="subject">
-                    <div class="name"> Sujet numéro 1</div>
-                    <div class="total_msg"> 10 </div>
-                    <div class="last_subject">Midi les zouzou - par Zouki</div>
-                </div>
-            </div>
+            <?= $dones ?>
         </div>
+        
     </div>
     <script type="text/javascript" src="scripts/script.js"></script>
 </body>

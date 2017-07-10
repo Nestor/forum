@@ -10,6 +10,14 @@
     }
 
     function userConnexion($username, $password){
+        /*
+        * C'est bien vu de vouloir séparer la connexion du reste des fonction mais c'est plutot les crédentielles user
+        * que tu veux mettre dans le fichier config et pas forcément la connexion
+        * tu peux faire ici dans fonctions.php une fonction getConnexion() qui te donnera la connexion
+        * ensuite si tu veux avoir les crédentiel dans le dossier config tu auras un cas de figure pour l'index.php
+        * et pour les services car les chemins relatifs ne seront pas les même.
+        * dans getConnexion() tu peux scanner les dossier et faire deux cas de figure je pense.
+        */
         include '../configuration/config.php';
 
         if (!empty($username) && !empty($password)) {
@@ -21,6 +29,12 @@
             $user = $object->fetchAll(PDO::FETCH_ASSOC);
 
             if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
+                // Alfonso: peut être tu devrais setter la session
+                // dans le service plutot. C'est sur comment tu as fait laisse le service super clean
+                // mais du coup on ne sait pas ce que fait exactement le service.
+                // donc tous ce qui est dans le if() et les redirections en passant par le setting de la session
+                // doit être fait dans  le service.
+                // également la construction du feedback
                 $_SESSION['user'] = [
                     'id' => $user[0]['id'],
                     'username' => $user[0]['username']
@@ -79,32 +93,125 @@
         }
     }
 
-    function GetForumData() {
-        include '../configuration/config.php';
-        //$object = $connexion->prepare('SELECT * FROM user WHERE id=:userId');
-        
-        // SELECT j.nom nom_jeu, p.prenom prenom_proprietaire
-        // FROM proprietaires p, jeux_video j
-        // WHERE j.ID_proprietaire = p.ID
+    function GetDataForum() {
+        include 'configuration/config.php';
 
-
-        // SELECT j.nom nom_jeu, p.prenom prenom_proprietaire
-        // FROM proprietaires p
-        // INNER JOIN jeux_video j
-        // ON j.ID_proprietaire = p.ID
-
-        // SELECT * FROM categories c INNER JOIN sous_categories s ON s.id_categories= c.id
-        // SELECT c.categorie FROM categories c INNER JOIN sous_categories s ON s.id_categories = c.id
-        $object = $connexion->prepare('SELECT * FROM categories c INNER JOIN sous_categories s ON s.id_categories= c.id');
-        // SELECT id_categories 
+        $object = $connexion->prepare('SELECT * FROM categories c INNER JOIN sous_categories s ON c.id= s.id_categories');
         $object->execute();
         $data = $object->fetchAll(PDO::FETCH_ASSOC);
 
+        /*
+            Pour charger les catégories est les sous catégories
+        */
+        $formCatArray = array();
+        $clef = array();
+        /* Boucle pour liste nos catégories*/
+        foreach($data as $initialise) {
+            array_push($clef, $initialise['categorie']);
+        }
+        $formCatArray = array_fill_keys($clef, null); // ici on assigne les clef
 
-        print_r($data);
+        /* On remplie l'array à l'aide des clef*/
+        foreach($data as $donnees) {
+            if(!in_array($donnees['categorie'], $formCatArray)){
+                $formCatArray[$donnees['categorie']][] .= $donnees['id']."#".$donnees['name'];
+            }
+        }
+        //print_r($formCatArray);
+        $dataHTML = "";
+        foreach($formCatArray as $key => $catego) {
+            $dataHTML .= '<div class="categorie"><div class="header red"><p>'.$key.'</p></div>';
+            foreach($catego as $sous_cat) {
+                $resultSousCat = explode("#",$sous_cat);
+                $id_categorie = $resultSousCat[0];
+                $name_categorie = $resultSousCat[1];
 
-
-        echo $data[0]['categorie'].'->'.$data[0]['categorie'];
+                $dataHTML .= '<div class="subject"><div class="name"><a href="index.php?page=sujet&category='.$id_categorie.'">'.$name_categorie.'</a></div><div class="total_msg"> 10 </div><div class="last_subject">Midi les zouzou - par Zouki</div></div>';
+            }
+            $dataHTML .= '</div>';
+        }
+        return $dataHTML;
+        
     }
-    GetForumData();
+    
+    function GetDataSujet($id) {
+        include 'configuration/config.php';
+
+        $object = $connexion->prepare('SELECT * FROM sous_categories INNER JOIN sujet ON sujet.sujet_id_sous_categorie = :id');
+        $object->execute(array(
+            "id" => intval($id)
+        ));
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+        $sujetForum = [];
+
+        foreach($data as $key => $donnees) {
+            $donneesVar = $donnees['sujet_id'].'#'.$donnees['sujet_titre'].'#'.$donnees['sujet_contenue'].'#'.$donnees['sujet_date'].'#'.$donnees['sujet_user_id'].'#'.$donnees['sujet_id_sous_categorie'];
+            if (!in_array($donneesVar, $sujetForum)) {
+                $sujetForum[] .= $donneesVar;
+            }
+            
+        }
+
+        $dataHTML = "";
+        foreach($sujetForum as $value) {
+
+            $dataSplited = explode("#",$value);
+            $sujet_id = $dataSplited[0];
+            $sujet_titre  = $dataSplited[1];
+            $sujet_contenue = $dataSplited[2];
+            $sujet_date = $dataSplited[3];
+            $sujet_user_id = $dataSplited[4];
+            $sujet_id_sous_categorie = $dataSplited[5];
+
+            $dataHTML .= '
+            <div class="subject">
+                <div class="name_sujet">
+                    <a href="index.php?page=read_sujet&id='.$sujet_id.'">'.$sujet_titre.'</a>
+                </div>
+                <div class="date">'.$sujet_date.'</div>
+                <div class="user">'.$sujet_user_id.'</div>
+            </div>
+            ';
+        }
+        return $dataHTML;
+    }
+
+    function GetUsername($id) {
+        include 'configuration/config.php';
+
+        $object = $connexion->prepare('SELECT username FROM users WHERE id = :id');
+        $object->execute(array(
+            "id" => intval($id)
+        ));
+        $result = $object->fetch();
+        return $result;
+        print_r($result);
+        $result->closeCursor();
+    }
+    
+    function GetSujetData($id) {
+        include 'configuration/config.php';
+
+        $object = $connexion->prepare('SELECT * FROM sujet WHERE sujet_id = :id');
+        $object->execute(array(
+            "id" => intval($id)
+        ));
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+        // sujet_id: "1",
+        // sujet_id_sous_categorie: "1",
+        // sujet_titre: "test",
+        // sujet_contenue: "bonjour à tous",
+        // sujet_date: "09/07/17",
+        // sujet_user_id: "0"
+        foreach($data as $value) {
+            return '
+            <div class="titre">'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</div>
+            <p>'.$value['sujet_contenue'].'</p>
+            
+            ';
+
+        }
+        
+    }
+    
 ?>
