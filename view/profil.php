@@ -10,7 +10,11 @@
     <link rel="stylesheet" type="text/css" href="styles/css/style.css" />
 </head>
 <body>
+    <?php include 'include/formCo.php'; ?>
+
     <div class="container-parent">
+
+        <?php include 'include/main.php'; ?>
         <!-- Espace membres -->
         <?php if(isset($_SESSION['user'])) { ?>
             <div class="container red">

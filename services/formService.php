@@ -1,9 +1,4 @@
 <?php
-try {
-
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
 include "../20_mvc/model/fonction.php";
 
 if (isset($_POST['msg'])) {

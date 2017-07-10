@@ -120,13 +120,13 @@
         //print_r($formCatArray);
         $dataHTML = "";
         foreach($formCatArray as $key => $catego) {
-            $dataHTML .= '<div class="categorie"><div class="header red"><p>'.$key.'</p></div>';
+            $dataHTML .= '<div class="categorie"><div class="header"><p>'.$key.'</p></div>';
             foreach($catego as $sous_cat) {
                 $resultSousCat = explode("#",$sous_cat);
                 $id_categorie = $resultSousCat[0];
                 $name_categorie = $resultSousCat[1];
 
-                $dataHTML .= '<div class="subject"><div class="name"><a href="index.php?page=sujet&category='.$id_categorie.'">'.$name_categorie.'</a></div><div class="total_msg"> 10 </div><div class="last_subject">Midi les zouzou - par Zouki</div></div>';
+                $dataHTML .= '<div class="subject"><div class="name"><a href="index.php?page=sujet&category='.$id_categorie.'">'.$name_categorie.'</a></div></div>';
             }
             $dataHTML .= '</div>';
         }
@@ -204,10 +204,10 @@
         // sujet_date: "09/07/17",
         // sujet_user_id: "0"
         foreach($data as $value) {
-            return '
-            <div class="titre">'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</div>
+            return '<div class="sujet">
+            <div class="titre"><p>'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</p></div>
             <p>'.$value['sujet_contenue'].'</p>
-            
+            </div>
             ';
 
         }

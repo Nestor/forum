@@ -28,41 +28,27 @@
     </script>
 </head>
 <body>
+    <?php include 'include/formCo.php'; ?>
+
     <div class="container-parent">
 
-        <!-- Espace membres -->
-        <div class="container green">
-            <?php if (isset($_SESSION['user'])) { ?>
-                <div class="header">Bienvenue 
-                <a href="index.php?page=profil&id=<?=$_SESSION['user']['id']?>" title="Profil page"><?= $_SESSION['user']['username'] ?></a>
-                 | 
-                <a href="index.php?page=mp&id=<?=$_SESSION['user']['id']?>" title="Message privée">Message privée</a>
-                 | 
-                <a href="services/disconnectService.php" title="Disconnect">Se déconnecter</a></div>
-            <?php } else { ?>
-                <div class="header">Espace membres</div>
-                <form action="services/loginService.php" method="post">
-                    <label>Nom de compte</label>
-                    <input type="text" name="account" /><br/>
-
-                    <label>Mot de passe</label>
-                    <input type="password" name="password" /><br/>
-
-                    <input type="submit" value="Envoyer" />
-                </form>
-                <a href="index.php?page=register">Inscription</a>
-            <?php } ?>
-        </div>
+        <?php include 'include/main.php'; ?>
 
         <!-- Forum container -->
         <div class="container">
-            <div class="sujet">
-                <?= $data ?>
-            </div>
-            <form action="#" method="post">
-            <textarea id="reponse_sujet"></textarea>
-            <input type="submit" value="poster" />
-            </form>
+            <?= $data ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <form action="services/postMessage.php" method="post">
+                    <input type="text" value="<?= $_SESSION['user']['id'] ?>" name="user_id"/>
+                    <input type="text" value="<?= $_GET['id'] ?>" name="sujet_id"/>
+                <textarea id="reponse_sujet" name="contenue" ></textarea>
+                <input type="submit" value="poster" />
+                </form>
+            <?php } else { ?>
+                Veillez vous connecter pour répondre au sujet
+            <?php  } ?>
+
+            
         </div>
         
     </div>
