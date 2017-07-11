@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Acceuil</title>
-    <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="styles/css/style.css" />
+    <?php include 'inc/header.php'; ?>
+    <title>Profil</title>
 </head>
 <body>
-    <?php include 'include/formCo.php'; ?>
+    <?php include 'inc/formCo.php'; ?>
 
     <div class="container-parent">
 
-        <?php include 'include/main.php'; ?>
+        <?php include 'inc/main.php'; ?>
         <!-- Espace membres -->
         <?php if(isset($_SESSION['user'])) { ?>
             <div class="container red">
-                <div class="header green">Profil de <?= $utilisateur[0]['username'] ?><a href="index.php"><-|</a></div>
-                <?php
-                    if (isset($utilisateur)) {
-                        echo 'Username: '.$utilisateur[0]['username'].'<br/>';
-                        echo 'Email: '.$utilisateur[0]['email'].'<br/>';
-                        echo '<img src="../Forum/styles/'.$utilisateur[0]['path_avatar'].'" alt="avatar" style="width: 200px;height: 200px;"/><br/>';
-                        echo 'Compte créer le: '.$utilisateur[0]['date_creation'].'<br/>';
-                    }
-                ?>
-                <!--<div class="header">Profil de <?= $utilisateur[0]['username'] ?></div>-->
+
+
+                <div id="profilPage">
+                    <?php if (isset($utilisateur)) { ?>
+                    <div class="main">
+                        <img src="../Forum/styles/<?=$utilisateur[0]['path_avatar']?>" alt="avatar" class="avatar"/>
+                    </div>
+                    <div class="container">
+                        <div class="header"><p><?=$utilisateur[0]['username']?></p></div>
+                                Email: <?=$utilisateur[0]['email']?><br/>
+                                Compte créer le: <?=$utilisateur[0]['date_creation']?>
+                    <?php } ?>
+                    </div>
+                </div>
             </div>
         <?php } else { ?>
             <div class="container red">

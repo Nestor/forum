@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Acceuil</title>
-    <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="styles/css/style.css" />
+    <?php include 'inc/header.php'; ?>
+    <title>Inscription</title>
 </head>
 <body>
-    <?php include 'include/formCo.php'; ?>
+    <?php include 'inc/formCo.php'; ?>
 
     <div class="container-parent">
 
-        <?php include 'include/main.php'; ?>
+        <?php include 'inc/main.php'; ?>
         <!-- Espace membres -->
         <div class="container red">
             <div class="header green">Inscription <a href="index.php"><-|</a></div>

@@ -8,7 +8,17 @@
         }
         return $page;
     }
+    function MYSQLConnexion() {
+        try {
+            $connexion = new PDO('mysql:host=localhost;port=3306;dbname=forumDB;charset=UTF8', 'root', 'root');
+            $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connexion->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
+            return $connexion;
+        } catch(Exception $e) {
+            die("MYSQL: ".$e->getMessage());
+        }
+    }
     function userConnexion($username, $password){
         /*
         * C'est bien vu de vouloir séparer la connexion du reste des fonction mais c'est plutot les crédentielles user
@@ -21,8 +31,8 @@
         * Alfonso: faire des includes comme ça dans les fonctions c'est un peu moche. Plutot tu devrais appeler une
          * fonction getConnexion() à chaque fois. À toi de voir une solution pour n'avoir qu'une seule connexion
         */
-        include '../configuration/config.php';
-
+        //include '../configuration/config.php';
+        $connexion=MYSQLConnexion();
 
         /* Alfonso: is un username est empty ou pas doit être vérifié dans un service et pas dans cette
          * fonction. Tes services doivent être plus plein avec des if et des conditions qui font
@@ -61,7 +71,7 @@
     }
 
     function loadUsersProfil($id) {
-         include 'configuration/config.php';
+         $connexion=MYSQLConnexion();
          $object = $connexion->prepare('SELECT * FROM users WHERE id=:id');
          $object->execute(array(
              'id' => $id
@@ -81,7 +91,7 @@
     }
 
     function userRegister($username, $password, $email){
-        include '../configuration/config.php';
+        $connexion=MYSQLConnexion();
         $date_creation = date("d/m/y");
 
 
@@ -109,7 +119,7 @@
     }
 
     function GetDataForum() {
-        include 'configuration/config.php';
+        $connexion=MYSQLConnexion();
 
         $object = $connexion->prepare('SELECT * FROM categories c INNER JOIN sous_categories s ON c.id= s.id_categories');
         $object->execute();
@@ -157,7 +167,7 @@
     }
     
     function GetDataSujet($id) {
-        include 'configuration/config.php';
+        $connexion=MYSQLConnexion();
 
         $object = $connexion->prepare('SELECT * FROM sous_categories INNER JOIN sujet ON sujet.sujet_id_sous_categorie = :id');
         $object->execute(array(
@@ -199,7 +209,7 @@
     }
 
     function GetUsername($id) {
-        include 'configuration/config.php';
+        $connexion=MYSQLConnexion();
 
         $object = $connexion->prepare('SELECT username FROM users WHERE id = :id');
         $object->execute(array(
@@ -211,33 +221,8 @@
         $result->closeCursor();
     }
     
-    function GetSujetData($id) {
-        include 'configuration/config.php';
-
-        $object = $connexion->prepare('SELECT * FROM sujet WHERE sujet_id = :id');
-        $object->execute(array(
-            "id" => intval($id)
-        ));
-        $data = $object->fetchAll(PDO::FETCH_ASSOC);
-        // sujet_id: "1",
-        // sujet_id_sous_categorie: "1",
-        // sujet_titre: "test",
-        // sujet_contenue: "bonjour à tous",
-        // sujet_date: "09/07/17",
-        // sujet_user_id: "0"
-        foreach($data as $value) {
-            return '<div class="sujet">
-            <div class="titre"><p>'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</p></div>
-            <p>'.$value['sujet_contenue'].'</p>
-            </div>
-            ';
-
-        }
-        
-    }
-
     function getAllUsers() {
-        include 'configuration/config.php';
+        $connexion=MYSQLConnexion();
 
         $object = $connexion->prepare('SELECT username FROM users');
         $object->execute();
@@ -251,30 +236,47 @@
         return $dataHTML;
     }
         
-        function GetSujedtData() {
-        include 'configuration/config.php';
-
-        $object = $connexion->prepare('SELECT * FROM sujet INNER JOIN sujet_response ON sujet.sujet_id= sujet_response.msg_sujet_id');
-        $object->execute();
+    function GetResponseFromSujet($id) {
+        $connexion=MYSQLConnexion();
+        // SELECT * FROM sujet INNER JOIN sujet_response ON sujet.sujet_id= sujet_response.msg_sujet_id
+        $object = $connexion->prepare('SELECT * FROM sujet_response WHERE msg_sujet_id=:id');
+        $object->execute(array(
+            "id" => $id
+        ));
         $data = $object->fetchAll(PDO::FETCH_ASSOC);
 
-        // sujet_id: "2"
-        // sujet_id_sous_categorie: "5",
-        // sujet_titre: "teste des sujet",
-        // sujet_contenue: "ceci est un teste afin de remplir le forum est de le design",
-        // sujet_date: "10/07/17",
-        // sujet_user_id: "1",
-        // msg_id: "1",
-        // msg_sujet_id: "2",
-        // msg_contenue: "&lt;p&gt;bonjour &amp;agrave; tous&lt;/p&gt;",
-        // msg_date: "10/07/17",
-        // msg_user_id: "1"
         $dataHTML = "";
         foreach($data as $value){
-            $dataHTML .= '[titre]'.$value['sujet_titre'].'[/titre]';
+            $dataHTML .= '<div class="responseSujet">
+            <div class="header">
+                <div class="poste_username"><p>Poster par '.$value['msg_user_name'].'</p></div>
+                <div class="poste_date"><p>Le '.$value['msg_date'].'</p></div>
+            </div>
+            <div class="container">
+                <p>'.$value['msg_contenue'].'</p>
+            </div>
+            </div>';
         }
-        return $data;
-        
+        return $dataHTML;
+    }
+    function GetSujetData($id) {
+        $connexion=MYSQLConnexion();
+        // SELECT * FROM sujet INNER JOIN sujet_response ON sujet.sujet_id= sujet_response.msg_sujet_id
+        $object = $connexion->prepare('SELECT * FROM sujet WHERE sujet_id=:id');
+        $object->execute(array(
+            "id" => $id
+        ));
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        $dataHTML = "";
+        foreach($data as $value){
+            $dataHTML .= '<div class="sujet">
+            <div class="titre"><p>'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</p></div>
+            <div class="container">'.$value['sujet_contenue'].'</div>
+            </div>
+            ';
+        }
+        return $dataHTML;
     }
 
 ?>

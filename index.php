@@ -30,9 +30,7 @@ switch($page) {
     break;
     case "read_sujet":
         $data = GetSujetData($_GET['id']);
-        $data_test = GetSujedtData();
-        print_r($data_test);
-        die;
+        $data_response = GetResponseFromSujet($_GET['id']);
         include 'view/readSujet.php';
     break;
     case "create_sujet":

@@ -1,0 +1,18 @@
+
+Il faut au moins les entitées:
+Utilisateur, Catégories et postes
+(avancer) créer les entitées tags
+
+
+Fonction forum à faire
+Se connecter
+Récupérer sont mot de passe perdu
+faire des vérification formulaire :
+username (min 4 caractères)
+vérifier le champ email
+mot de passe (8 caractères minimum)
+vérification password confirmer
+
+créer un profil utilisateur avec leur avatar, pseudo, date d'inscription
+faire en sorte qu'il puisse éditer sont profil
+créer une liste des utilisateur
