@@ -41,6 +41,14 @@ switch($page) {
         $users = getAllUsers();
         include 'view/usersList.php';
     break;
-
+    case "search":
+        include 'view/search.php';
+    break;
+    case "contact":
+        include 'view/contact.php';
+    break;
+    case "space_member":
+        include 'view/space_member.php';
+    break;
 }
 ?>

@@ -23,7 +23,8 @@
                     <div class="container">
                         <div class="header"><p><?=$utilisateur[0]['username']?></p></div>
                                 Email: <?=$utilisateur[0]['email']?><br/>
-                                Compte créer le: <?=$utilisateur[0]['date_creation']?>
+                                Compte créer le: <?=$utilisateur[0]['date_creation']?><br/>
+                                Grade: <?=$utilisateur[0]['grade']?>
                     <?php } ?>
                     </div>
                 </div>

@@ -133,6 +133,7 @@ body {
     padding: 10px 5px;
     border-right: 1px solid rgba(0,0,0,0.1);
 }
+
 .container .categorie .subject .name a {
     color: #323232;
     text-decoration: none;
@@ -140,23 +141,43 @@ body {
     font-family: 'Roboto-Light';
     padding-left: 30px;
 }
-.container .categorie .subject .name_sujet {
-    width: 70%;
-    padding: 10px 5px;
+/* ---------------------------- */
+/* Sujet element */
+.container .categorie_sujet .sujet {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #cbcbcb;
 }
-.container .categorie .subject .date {
-    width: 10%;
-    padding: 10px 20px;
-    text-align: center;
+.container .categorie_sujet .sujet .name_sujet { 
+    width: 80%;
+    font-family: 'Roboto-Thin';
     font-size: 20px;
 }
-.container .categorie .subject .user {
-    width: 20%;
-    padding: 10px 20px;
-    border-left: 1px solid black;
+.container .categorie_sujet .sujet .name_sujet a { 
+    text-decoration: none;
+    color: #323232;
+}
+
+.container .categorie_sujet .sujet .date { 
+    width: 10%;
+    text-align: center;
+    color: #323232;
+    border-left: 1px solid #cbcbcb;
+    border-right: 1px solid #cbcbcb;
+}
+.container .categorie_sujet .sujet .user
+
+
+    width: 10%;
+    text-align: center;
+    color: #323232;
+}
+.container .categorie_sujet .sujet div p {
+    padding: 10px 5px;
 }
 /* ---------------------------- */
-
 /* Sujet element */
 .container .sujet {
     width: 100%;
@@ -178,10 +199,12 @@ body {
     width: 90%;
     height: auto;
     min-height: 200px;
-    margin: 10px;    
+    margin: 10px;
+    font-size: 20px;
+    font-family: 'Roboto-Thin';
 }
 #responseForm {
-    border-top: 1px solid #323232;
+    border-top: 1px solid #cbcbcb;
     width: 100%;
     margin: auto;
 }
@@ -210,6 +233,7 @@ body {
     width: 100%;
     height: auto;
     background-color: silver;
+    font-weight: 0;
 }
 .container .responseSujet .header {
     width: 100%;
@@ -233,17 +257,21 @@ body {
     padding: 5px 5px;
 }
 .button {
+    display: block;
     width: 15%;
     height: auto;
     max-height: 25px;
-    font-size: 16px;
+    font-size: 20px;
+    text-decoration: none;
     background-color: #288dc3;
-    border: none;
-    border-radius: 4px;
     color: #fff;
-    margin: 5px;
+    padding: 10px 5px; 
+    text-align: center;
     cursor: pointer;
-    padding: 2px 5px;
+    transition: 0.5s all;
+}
+.button:hover {
+    background-color: #2276a2;
 }
 /* ---------------------------- */
 .container #profilPage {
@@ -276,4 +304,108 @@ body {
 .container #profilPage .container .header p {
     padding: 10px 5px;
     color:#fff;
+}
+/* ---------------------------- */
+/* Liste des utilisateurs */
+.container .utilisateur {
+    width: 100%;
+    height: auto;
+}
+.container .utilisateur .userline {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #cbcbcb;
+    font-size: 20px;
+    color: #323232;
+}
+.container .utilisateur .username {
+    width: 80%;
+    height: 20px;
+    height: auto;
+    padding: 10px 5px;
+}
+.container .utilisateur .username a {
+    text-decoration: none;
+    color: #323232;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.container .utilisateur .username a:hover {
+    color: #288dc3;
+}
+.container .utilisateur .usergrade {
+    width: 20%;
+    height: auto;
+    padding: 10px 5px;
+    text-align: center;
+}
+/* ---------------------------- */
+/* Page espace membres */
+#Register_LoginPanel {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 10px;
+}
+#Register_LoginPanel .separator {
+    width: 5px;
+    height: 300px;
+    background-color: #288dc3;
+}
+#Register_LoginPanel .login {
+    width: 50%;
+    height: auto;
+    min-height: 300px;
+}
+#Register_LoginPanel .login h2 {
+    font-size: 30px;
+    color: #288dc3;
+}
+#Register_LoginPanel .login form {
+    width: 80%;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
+}
+#Register_LoginPanel .login input {
+    display: block;
+    font-size: 20px;
+    margin: auto;
+}
+#Register_LoginPanel .login input[type="submit"] {
+    width: 30%;
+    height: auto;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #288dc3;
+    color: #fff;
+}
+#Register_LoginPanel .register {
+    width: 50%;
+    height: auto;
+    min-height: 300px;
+}
+#Register_LoginPanel .register h2 {
+    font-size: 30px;
+    color: #288dc3;
+}
+#Register_LoginPanel .register form {
+    width: 80%;
+    height: auto;
+    margin: auto;
+}
+#Register_LoginPanel .register input {
+    display: block;
+    font-size: 20px;
+    margin: auto;
+}
+#Register_LoginPanel .register input[type="submit"] {
+    width: 30%;
+    height: auto;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #288dc3;
+    color: #fff;
 }

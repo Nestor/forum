@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:8889
--- Généré le :  Lun 10 Juillet 2017 à 16:55
+-- Généré le :  Mar 11 Juillet 2017 à 16:48
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -106,16 +106,18 @@ CREATE TABLE `sujet_response` (
   `msg_sujet_id` int(12) NOT NULL,
   `msg_contenue` text NOT NULL,
   `msg_date` varchar(8) NOT NULL,
-  `msg_user_id` int(12) NOT NULL
+  `msg_user_id` int(12) NOT NULL,
+  `msg_user_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `sujet_response`
 --
 
-INSERT INTO `sujet_response` (`msg_id`, `msg_sujet_id`, `msg_contenue`, `msg_date`, `msg_user_id`) VALUES
-(1, 2, '&lt;p&gt;bonjour &amp;agrave; tous&lt;/p&gt;', '10/07/17', 1),
-(6, 2, '&lt;p&gt;sqfdsfdsfdf&lt;/p&gt;', '10/07/17', 1);
+INSERT INTO `sujet_response` (`msg_id`, `msg_sujet_id`, `msg_contenue`, `msg_date`, `msg_user_id`, `msg_user_name`) VALUES
+(15, 2, '<p>sdfsdf</p>', '11/07/17', 1, 'zouki'),
+(16, 2, '<p>tags,</p>', '11/07/17', 1, 'zouki'),
+(17, 2, '<p>bonjour &agrave; tous cava ?</p>', '11/07/17', 1, 'zouki');
 
 -- --------------------------------------------------------
 
@@ -129,6 +131,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `path_avatar` varchar(255) NOT NULL,
+  `grade` varchar(255) NOT NULL,
   `date_creation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -136,12 +139,12 @@ CREATE TABLE `users` (
 -- Contenu de la table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `path_avatar`, `date_creation`) VALUES
-(1, 'zouki', 'admin', 'zouki.dev@gmail.com', 'images/empty_avatar.png', '07/07/17'),
-(2, 'test', 'test', 'test@gmail.com', 'images/empty_avatar.png', '07/07/17'),
-(3, 'admin', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', '07/07/17'),
-(5, 'sffsddsf', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', '07/07/17'),
-(6, 'sqdksqdk', 'ksdqkdkls', 'kskqldklqds', 'images/empty_avatar.png', '07/07/17');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `path_avatar`, `grade`, `date_creation`) VALUES
+(1, 'zouki', 'admin', 'zouki.dev@gmail.com', 'images/empty_avatar.png', 'superadmin', '07/07/17'),
+(2, 'test', 'test', 'test@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
+(3, 'admin', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
+(5, 'sffsddsf', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
+(6, 'sqdksqdk', 'ksdqkdkls', 'kskqldklqds', 'images/empty_avatar.png', 'user', '07/07/17');
 
 --
 -- Index pour les tables exportées
@@ -204,7 +207,7 @@ ALTER TABLE `sujet`
 -- AUTO_INCREMENT pour la table `sujet_response`
 --
 ALTER TABLE `sujet_response`
-  MODIFY `msg_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `msg_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT pour la table `users`
 --

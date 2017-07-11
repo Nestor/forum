@@ -4,8 +4,8 @@ dans les vues -->
     <ul>
         <li><a href="index.php?page=accueil">Accueil</a></li>
         <li><a href="index.php?page=users_list">Membres</a></li>
-        <li><a href="#">Recherche</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Espace membre</a></li>
+        <li><a href="index.php?page=search">Recherche</a></li>
+        <li><a href="index.php?page=contact">Contact</a></li>
+        <li><a href="index.php?page=space_member">Espace membre</a></li>
     </ul>
 </div>

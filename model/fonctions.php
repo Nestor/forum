@@ -31,7 +31,7 @@
         * Alfonso: faire des includes comme ça dans les fonctions c'est un peu moche. Plutot tu devrais appeler une
          * fonction getConnexion() à chaque fois. À toi de voir une solution pour n'avoir qu'une seule connexion
         */
-        //include '../configuration/config.php';
+
         $connexion=MYSQLConnexion();
 
         /* Alfonso: is un username est empty ou pas doit être vérifié dans un service et pas dans cette
@@ -55,7 +55,8 @@
                 // également la construction du feedback
                 $_SESSION['user'] = [
                     'id' => $user[0]['id'],
-                    'username' => $user[0]['username']
+                    'username' => $user[0]['username'],
+                    'grade' => $user[0]['grade']
                 ];
                 header('location: ../index.php');
             } else {
@@ -196,12 +197,13 @@
             $sujet_id_sous_categorie = $dataSplited[5];
 
             $dataHTML .= '
-            <div class="subject">
+            
+            <div class="sujet">
                 <div class="name_sujet">
-                    <a href="index.php?page=read_sujet&id='.$sujet_id.'">'.$sujet_titre.'</a>
+                    <p><a href="index.php?page=read_sujet&id='.$sujet_id.'">'.$sujet_titre.'</a></p>
                 </div>
-                <div class="date">'.$sujet_date.'</div>
-                <div class="user">'.$sujet_user_id.'</div>
+                <div class="date"><p>'.$sujet_date.'</p></div>
+                <div class="user"><p>'.$sujet_user_id.'</p></div>
             </div>
             ';
         }
@@ -224,14 +226,19 @@
     function getAllUsers() {
         $connexion=MYSQLConnexion();
 
-        $object = $connexion->prepare('SELECT username FROM users');
+        $object = $connexion->prepare('SELECT id, username, grade FROM users');
         $object->execute();
         $data = $object->fetchAll(PDO::FETCH_ASSOC);
 
         // return $data;
         $dataHTML = "";
         foreach($data as $value) {
-            $dataHTML .= '<div class="subject"><div class="users">'.$value['username'].'</div></div>';
+            $dataHTML .= '
+            <div class="userline">
+            <div class="username"><a href="index.php?page=profil&id='.$value['id'].'">'.$value['username'].'</a></div>
+            <div class="usergrade">'.$value['grade'].'</div>
+            </div>
+            ';
         }
         return $dataHTML;
     }

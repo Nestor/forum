@@ -14,10 +14,9 @@
 
         <!-- Forum container -->
         <div class="container">
-            <div class="categorie">
-
+            <div class="utilisateur">
                 <?= $users?>
-
+            </div>
         </div>
         
     </div>
