@@ -11,6 +11,7 @@ $page = getPage();
 switch($page) {
     case "accueil":
         $dones = GetDataForum();
+
         include 'view/accueil.php';
     break;
     case "profil":
@@ -30,7 +31,19 @@ switch($page) {
     break;
     case "read_sujet":
         $data = GetSujetData($_GET['id']);
+        $data_test = GetSujedtData();
+        print_r($data_test);
+        die;
         include 'view/readSujet.php';
     break;
+    case "create_sujet":
+        $categorie_id = $_GET['category'];
+        include 'view/createSujet.php';
+    break;
+    case "users_list":
+        $users = getAllUsers();
+        include 'view/usersList.php';
+    break;
+
 }
 ?>

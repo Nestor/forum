@@ -39,8 +39,8 @@
             <?= $data ?>
             <?php if (isset($_SESSION['user'])) { ?>
                 <form action="services/postMessage.php" method="post">
-                    <input type="text" value="<?= $_SESSION['user']['id'] ?>" name="user_id"/>
-                    <input type="text" value="<?= $_GET['id'] ?>" name="sujet_id"/>
+                    <input type="hidden" value="<?= $_SESSION['user']['id'] ?>" name="user_id"/>
+                    <input type="hidden" value="<?= $_GET['id'] ?>" name="sujet_id"/>
                 <textarea id="reponse_sujet" name="contenue" ></textarea>
                 <input type="submit" value="poster" />
                 </form>

@@ -213,4 +213,46 @@
         }
         
     }
+
+    function getAllUsers() {
+        include 'configuration/config.php';
+
+        $object = $connexion->prepare('SELECT username FROM users');
+        $object->execute();
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        // return $data;
+        $dataHTML = "";
+        foreach($data as $value) {
+            $dataHTML .= '<div class="subject"><div class="users">'.$value['username'].'</div></div>';
+        }
+        return $dataHTML;
+    }
+        
+        function GetSujedtData() {
+        include 'configuration/config.php';
+
+        $object = $connexion->prepare('SELECT * FROM sujet INNER JOIN sujet_response ON sujet.sujet_id= sujet_response.msg_sujet_id');
+        $object->execute();
+        $data = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        // sujet_id: "2"
+        // sujet_id_sous_categorie: "5",
+        // sujet_titre: "teste des sujet",
+        // sujet_contenue: "ceci est un teste afin de remplir le forum est de le design",
+        // sujet_date: "10/07/17",
+        // sujet_user_id: "1",
+        // msg_id: "1",
+        // msg_sujet_id: "2",
+        // msg_contenue: "&lt;p&gt;bonjour &amp;agrave; tous&lt;/p&gt;",
+        // msg_date: "10/07/17",
+        // msg_user_id: "1"
+        $dataHTML = "";
+        foreach($data as $value){
+            $dataHTML .= '[titre]'.$value['sujet_titre'].'[/titre]';
+        }
+        return $data;
+        
+    }
+
 ?>
