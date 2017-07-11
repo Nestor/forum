@@ -1,3 +1,5 @@
+<!-- Alfonso: j'aurai plutot mis tous ces includes dans un sous dossier
+dans les vues -->
 <div class="main">
     <ul>
         <li><a href="index.php?page=accueil">Accueil</a></li>

@@ -17,9 +17,17 @@
         * ensuite si tu veux avoir les crédentiel dans le dossier config tu auras un cas de figure pour l'index.php
         * et pour les services car les chemins relatifs ne seront pas les même.
         * dans getConnexion() tu peux scanner les dossier et faire deux cas de figure je pense.
+        *
+        * Alfonso: faire des includes comme ça dans les fonctions c'est un peu moche. Plutot tu devrais appeler une
+         * fonction getConnexion() à chaque fois. À toi de voir une solution pour n'avoir qu'une seule connexion
         */
         include '../configuration/config.php';
 
+
+        /* Alfonso: is un username est empty ou pas doit être vérifié dans un service et pas dans cette
+         * fonction. Tes services doivent être plus plein avec des if et des conditions qui font
+         * les vérifications.
+         * */
         if (!empty($username) && !empty($password)) {
 
             $object = $connexion->prepare('SELECT * FROM users WHERE username=:username');
@@ -64,6 +72,10 @@
          if (!$result == 0) {
              return $user;
          } else {
+             /*
+              * Alfonso: ce genre de contrôle doit être fait dans le service
+              * et le feedback rapporté au user
+              * */
              echo 'Aucune données pour ce compte';
          }
     }
@@ -87,6 +99,9 @@
                 "avatar" => "images/empty_avatar.png",
                 "date_create" => $date_creation
             ));
+            /*
+            * Alfonso: Les redirections doivent être faites dans un service plutot que dans une fonction
+            * */
             header('location: ../index.php?page=register&etat=success');
         } else {
             header('location: ../index.php?page=register&etat=exist');
@@ -117,6 +132,13 @@
                 $formCatArray[$donnees['categorie']][] .= $donnees['id']."#".$donnees['name'];
             }
         }
+        /*
+         * Alfonso: ces fonction qui crée de l'html doivent être dans un template de préférence. Si c'est des bloques qui reviennent
+         * il y a moyen d'en faire des templates également. Ça a plus de sens si on veut jouer avec ces bloques dans les templates
+         * plutot que devoir chercher dans quel fonction est un menu.
+         *
+         * Même observation pour les fonctions successives.
+         * */
         //print_r($formCatArray);
         $dataHTML = "";
         foreach($formCatArray as $key => $catego) {
