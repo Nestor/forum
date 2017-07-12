@@ -31,6 +31,7 @@
         <?php if(isset($_SESSION['user'])) { ?>
             <div class="container red">
                 <div class="header green">Boite de reception de <?= $utilisateur[0]['username'] ?><a href="index.php"> <-|</a></div>
+                
                 <table style="border: 1px solid black;">
                     <tr>
                         <th>Message</th>
@@ -43,25 +44,28 @@
                         <td>par</td>
                     </tr>
                 </table>
+
                 <form action="#" method="post">
 
                     <label>Utilisateur</label><br/>
                     <input type="text" name="user" /><br/><br/>
-
                     <label>Titre</label><br/>
                     <input type="text" name="title" /><br/><br/>
-
                     <label>Message</label><br/>
                     <textarea id="pvMSG" name="message"></textarea><br/><br/>
 
                     <input type="submit" value="Envoyer" />
+
                 </form>
+
             </div>
         <?php } else { ?>
+        
             <div class="container red">
                 <div class="header">Erreur connexion</div>
                 <h2>Veuillez vous connecter</h2>
             </div>
+
         <?php } ?>
     </div>
     <script type="text/javascript" src="scripts/script.js"></script>

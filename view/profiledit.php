@@ -25,28 +25,34 @@
 
                                 <?php if($_GET['id'] == $_SESSION['user']['id']){ ?>
                                     <form action="services/email_changer.php" method="post">
-                                        Changer d'adresse mail:
+
+                                        <label>Changer d'adresse mail:</label>
                                         <input type="hidden" name="id_user" value="<?=$_SESSION['user']['id']?>" />
                                         <input type="text" value="<?=$utilisateur[0]['email']?>" name="email" /><br/>
                                         <input type="submit" value="Changer d'adresse" name="submit">
+
                                     </form>
 
                                     <form action="services/password_changer.php" method="post">
+
                                         <input type="hidden" name="id_user" value="<?=$_SESSION['user']['id']?>" />
-                                        Changer de mot de passe:
+                                        <label>Changer de mot de passe:</label>
                                         <input type="password" name="ancienPassword" placeholder="Ancien mot de passe"/><br/>
-                                        Nouveau mot de passe:
+                                        <label>Nouveau mot de passe:</label>
                                         <input type="password" name="password" placeholder="Nouveau mot de passe"/><br/>
-                                        Confirmer le nouveau mot de passe:
+                                        <label>Confirmer le nouveau mot de passe:</label>
                                         <input type="password" name="confirmPassword" placeholder="Confirmer le mot de passe"/><br/><br/>
                                         <input type="submit" value="Changer le mot de passe" name="submit">
+
                                     </form>
 
                                     <form action="services/avatar_changer.php" method="post" enctype="multipart/form-data">
+
                                         <input type="hidden" name="id_user" value="<?=$_SESSION['user']['id']?>" />
-                                        Changer d'avatar
+                                        <label>Changer d'avatar</label>
                                         <input type="file" name="uploadedfile" id="uploadedfile">
                                         <input type="submit" value="Uploader l'image" name="submit">
+
                                     </form>
                                 <?php } ?>
                                 

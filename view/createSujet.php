@@ -31,14 +31,18 @@
         <!-- Forum container -->
         <div class="container">
             <?php if (isset($_SESSION['user'])) { ?>
+
                 <form action="services/postSujet.php" method="post">
+
                     <input type="hidden" name="idSCategorie" value="<?= $categorie_id ?>"/>
                     <input type="hidden" name="userID" value="<?= $_SESSION['user']['id'] ?>"/>
                     <input type="hidden" name="username" value="<?= $_SESSION['user']['username'] ?>"/>
                     <input type="text" name="titre" placeholder="Titre du sujet"/>
                     <textarea id="reponse_sujet" name="contenue" ></textarea>
                     <input type="submit" value="poster" />
+
                 </form>
+                
             <?php } else { ?>
                 Veillez vous connecter pour répondre au sujet
             <?php  } ?>

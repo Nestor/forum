@@ -17,6 +17,7 @@
             <div id="Register_LoginPanel">
                 <div class="login">
                     <h2>Mot de passe perdu</h2>
+
                     <?php
                             if(isset($_GET['password'])){
                                 if($_GET['password'] == "error"){
@@ -25,7 +26,8 @@
                                     echo 'Votre mot de passe est: '.$_GET['password'];
                                 }
                             }
-                        ?>
+                    ?>
+
                     <form action="services/searchPassword.php" method="post">
                         
                         <label>Nom de compte</label>
@@ -35,6 +37,7 @@
                         <label>Réponse secrète</label>
                         <input type="text" name="response" /><br/><br/>
                         <input type="submit" value="Retrouver"/>
+                        
                     </form>
                 </div>
             </div>

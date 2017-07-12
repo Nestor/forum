@@ -14,35 +14,36 @@
 
         <!-- Forum container -->
         <div class="container">
-            /!\ EN COURS DE DEV /!\
+
+            /!\ EN COURS DE DEV PAGE NON FONCTIONNEL /!\
+
             <h2>Rechercher un sujet</h2>
-            <form action="" method="post">
-                <input type="text" name="value"/><br/>
-                <input type="submit" value="Rechercher"/>
-            </form>
+                <form action="" method="post">
+                    <input type="text" name="value"/><br/>
+                    <input type="submit" value="Rechercher"/>
+                </form>
             <hr/>
 
             <h2>Rechercher un sujet dans une catégorie</h2>
-            <form action="#" method="post">
-                <input type="text" name="value"/>
-                <select name="catagorie">
-                    <option value="3">HTML</option>
-                    <option value="4">CSS</option>
-                    <option value="5">Javascript</option>
-                    <option value="6">PHP</option>
-                </select>
-                <input type="submit" value="Rechercher"/>
-            </form>
+                <form action="#" method="post">
+                    <input type="text" name="value"/>
+                    <select name="catagorie">
+                        <option value="3">HTML</option>
+                        <option value="4">CSS</option>
+                        <option value="5">Javascript</option>
+                        <option value="6">PHP</option>
+                    </select>
+                    <input type="submit" value="Rechercher"/>
+                </form>
             <hr/>
 
             <h2>Rechercher un membre</h2>
-            <form action="" method="post">
-                <input type="text" name="value"/><br/>
-                <input type="submit" value="Rechercher"/>
-            </form>
+                <form action="" method="post">
+                    <input type="text" name="value"/><br/>
+                    <input type="submit" value="Rechercher"/>
+                </form>
             <hr>
-
-            <div class="container"></div>
+            
         </div>
         
     </div>

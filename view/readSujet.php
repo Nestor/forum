@@ -37,12 +37,11 @@
 
             <?php if (isset($_SESSION['user'])) { ?>
                 <form action="services/postMessage.php" id="responseForm" method="post">
-                <!-- USER ID -->
+
                     <input type="hidden" value="<?= $_SESSION['user']['id'] ?>" name="user_id"/>
-                <!-- USER NAME -->
                     <input type="hidden" value="<?= $_SESSION['user']['username'] ?>" name="user_name"/>
-                <!-- USER ID -->
                     <input type="hidden" value="<?= $_GET['id'] ?>" name="sujet_id"/>
+
                     <div class="form_input">
                         <textarea id="reponse_sujet" name="contenue" ></textarea>
                         <div class="formRight_input">
@@ -50,11 +49,13 @@
                             <input type="text" name="tags" class="tags" /><br/>
                             <input type="submit" class="button" value="poster" />
                         </div>
-                        
                     </div>
+                    
                 </form>
             <?php } else { ?>
-                Veillez vous connecter pour répondre au sujet
+
+                <p>Veillez vous connecter pour répondre au sujet</p>
+
             <?php  } ?>
         </div>
     </div>

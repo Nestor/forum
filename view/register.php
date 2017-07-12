@@ -12,7 +12,9 @@
         <?php include 'inc/main.php'; ?>
         <!-- Espace membres -->
         <div class="container red">
+            
             <div class="header green">Inscription <a href="index.php"><-|</a></div>
+
             <?php
             if (isset($_GET['etat'])) {
                 switch($_GET['etat']) {
@@ -28,14 +30,17 @@
                 }
             }
             ?>
+
             <form action="services/registerService.php" method="post">
-            <label>Nom de compte</label>
-            <input type="" name="account"/><br/>
-            <label>Mot de passe</label>
-            <input type="password" name="password"/><br/>
-            <label>Adresse mail</label>
-            <input type="text" name="email"/><br/>
-            <input type="submit" value="S'inscrire" />
+
+                <label>Nom de compte</label>
+                <input type="" name="account"/><br/>
+                <label>Mot de passe</label>
+                <input type="password" name="password"/><br/>
+                <label>Adresse mail</label>
+                <input type="text" name="email"/><br/>
+                <input type="submit" value="S'inscrire" />
+
             </form>
 
 

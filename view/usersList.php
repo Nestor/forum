@@ -14,9 +14,11 @@
 
         <!-- Forum container -->
         <div class="container">
+
             <div class="utilisateur">
                 <?= $users?>
             </div>
+            
         </div>
         
     </div>

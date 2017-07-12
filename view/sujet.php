@@ -14,6 +14,7 @@
         <!-- Forum container -->
         <div class="container">
             <div class="categorie_sujet">
+
                 <a href="index.php?page=create_sujet&category=<?=$_GET['category']?>" class="button">Créer un sujet</a><br/>
                 <?php
                 if(empty($data)) {
@@ -21,6 +22,7 @@
                 }
                 ?>
                 <?= $data ?>
+                
             </div>
         </div>
         

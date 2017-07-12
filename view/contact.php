@@ -18,12 +18,14 @@
             <h2>Contact</h2>
             
             <?php if (isset($_SESSION['user'])) { ?>
+
                 <form action="" method="post">
                     <input type="text" name="email" placeholder="Email"/><br/>
                     <input type="text" name="titre" placeholder="Titre"/><br/>
                     <textarea style="margin: auto;width: 99%;height:200px;" placeholder="Votre message"></textarea>
                     <input type="submit" value="Envoyer"/>
                 </form>
+
             <?php } else { ?>
                 <p>Veuillez vous connecter</p>
             <?php } ?>
