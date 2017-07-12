@@ -20,55 +20,33 @@
         }
     }
     function userConnexion($username, $password){
-        /*
-        * C'est bien vu de vouloir séparer la connexion du reste des fonction mais c'est plutot les crédentielles user
-        * que tu veux mettre dans le fichier config et pas forcément la connexion
-        * tu peux faire ici dans fonctions.php une fonction getConnexion() qui te donnera la connexion
-        * ensuite si tu veux avoir les crédentiel dans le dossier config tu auras un cas de figure pour l'index.php
-        * et pour les services car les chemins relatifs ne seront pas les même.
-        * dans getConnexion() tu peux scanner les dossier et faire deux cas de figure je pense.
-        *
-        * Alfonso: faire des includes comme ça dans les fonctions c'est un peu moche. Plutot tu devrais appeler une
-         * fonction getConnexion() à chaque fois. À toi de voir une solution pour n'avoir qu'une seule connexion
-        */
-
         $connexion=MYSQLConnexion();
-
-        /* Alfonso: is un username est empty ou pas doit être vérifié dans un service et pas dans cette
-         * fonction. Tes services doivent être plus plein avec des if et des conditions qui font
-         * les vérifications.
-         * */
-        if (!empty($username) && !empty($password)) {
 
             $object = $connexion->prepare('SELECT * FROM users WHERE username=:username');
             $object->execute(array(
                 'username' => htmlentities($username)
             ));
             $user = $object->fetchAll(PDO::FETCH_ASSOC);
-
-            if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
-                // Alfonso: peut être tu devrais setter la session
-                // dans le service plutot. C'est sur comment tu as fait laisse le service super clean
-                // mais du coup on ne sait pas ce que fait exactement le service.
-                // donc tous ce qui est dans le if() et les redirections en passant par le setting de la session
-                // doit être fait dans  le service.
-                // également la construction du feedback
-                $_SESSION['user'] = [
-                    'id' => $user[0]['id'],
-                    'username' => $user[0]['username'],
-                    'grade' => $user[0]['grade']
-                ];
-                header('location: ../index.php');
+            
+            if($object->rowCount() >= 1) {
+                if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
+                    $tableau = [
+                        "etat" => "TRUE",
+                        "data" => [
+                            'id' => $user[0]['id'],
+                            'username' => $user[0]['username'],
+                            'grade' => $user[0]['grade']
+                        ]
+                    ];
+                    return $tableau;
+                }
             } else {
-                header('location: ../index.php?etat=error');
+                $tableau = [
+                    "etat" => "FALSE",
+                    "data" => []
+                ];
+                return $tableau;
             }
-
-            print_r($user);
-        } else {
-            echo 'Veuillez remplir tout les champs';
-        }
-
-
     }
 
     function loadUsersProfil($id) {
@@ -284,6 +262,77 @@
             ';
         }
         return $dataHTML;
+    }
+
+    function changeMail($id, $email){
+        
+        $connexion=MYSQLConnexion();
+        $object = $connexion->prepare('UPDATE users SET email=:mail WHERE id=:id');
+        $object->execute(array(
+            "mail" => $email,
+            "id" => $id
+        ));
+
+        return $object->rowCount();
+    }
+
+    function changeAvatar($avatar, $id){
+
+        $connexion=MYSQLConnexion();
+        $target_path = "../styles/images/avatars/";
+        $target_path = $target_path . basename( $avatar['name']);
+
+        if(move_uploaded_file($avatar['tmp_name'], $target_path)) {
+
+            $object = $connexion->prepare('UPDATE users SET path_avatar=:avatar WHERE id=:id');
+            $object->execute(array(
+                "avatar" => $target_path,
+                "id" => $id
+            ));
+
+            return "successavatar";
+
+        } else {
+            return "erroravatar";
+        }
+
+        if ($avatar['size'] <= 1000000) {
+                
+            $infosfichier = pathinfo($avatar['name']);
+
+            $extension_upload = $infosfichier['extension'];
+            $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+            if (in_array($extension_upload, $extensions_autorisees))
+            {
+                $newName = hash('sha1',$avatar['name']).'.'.$extension_upload;
+                move_uploaded_file($avatar['tmp_name'], 'uploads/' . basename($newName));
+                $object = $connexion->prepare('UPDATE users SET path_avatar=:avatar WHERE id=:id');
+                $object->execute(array(
+                    "avatar" => $target_path,
+                    "id" => $id
+                ));
+                return "successavatar";
+            }
+        }else{
+            return "maxsizeavatar";
+        }
+    }
+
+    function changePasswdfsdford($id, $lastPassword, $newPassword) {
+        $connexion=MYSQLConnexion();
+        $request = $connexion->prepare('SELECT password FROM users WHERE id=:id');
+        $request->execute(array(
+            "id" => $id
+        ));
+        $data = $request->fetch(PDO::FETCH_ASSOC);
+
+        if($lastPassword == $data['password']){
+            return "OK";
+            // créer la requete pour changer le mot de passe
+
+        } else {
+            return "LE MOT DE PASSE NE CORRESPOND PAS A L'ANCIEN ";
+        }
     }
 
 ?>

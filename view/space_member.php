@@ -16,6 +16,24 @@
         <div class="container">
             <div id="Register_LoginPanel">
                 <div class="login">
+                <?php
+                    if(isset($_GET['etat'])) {
+                        switch($_GET['etat']) {
+                            case "error":
+                                echo 'Erreur nom de compte ou mot de passe';
+                            break;
+                            case "connect":
+                                echo 'Vous êtes maintenant connecter';
+                            break;
+                            case "champempty":
+                                echo 'Veuillez remplir tout les champs';
+                            break;
+                            case "disconnect":
+                                echo 'Vous êtes maintenant déconnecter';
+                            break;
+                        }
+                    }
+                ?>
                     <h2>Connexion</h2>
                     <form action="services/loginService.php" method="post">
                         <input type="text" name="account" placeholder="Nom de compte" required>

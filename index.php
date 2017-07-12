@@ -50,5 +50,9 @@ switch($page) {
     case "space_member":
         include 'view/space_member.php';
     break;
+    case "profil_edit":
+        $utilisateur = loadUsersProfil($_GET['id']);
+        include 'view/profiledit.php';
+    break;
 }
 ?>

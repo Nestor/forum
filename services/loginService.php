@@ -2,9 +2,25 @@
     session_start();
     include '../model/fonctions.php';
 
-    //Alfonso: il faut que dans les services tu aies des checking du genre if les mots de passe
-    // sont empty() pas dans les fonctions
-    // la logique checking générale doit être dans les services.
+    if (!empty($_POST['account']) && !empty($_POST['password'])) {
 
-    userConnexion($_POST['account'], $_POST['password']);
+        $etat = userConnexion($_POST['account'], $_POST['password']);
+
+        if($etat["etat"] == "TRUE") {
+
+            $_SESSION['user'] = [
+                'id' => $etat['data']['id'],
+                'username' => $etat['data']['username'],
+                'grade' => $etat['data']['grade']
+            ];
+
+            header('location: ../index.php?page=space_member&etat=connect');
+        } else {
+            // echo 'Nom de compte ou mot de passe incorrect.';
+            header('location: ../index.php?page=space_member&etat=error');
+        }
+
+    } else {
+        header('location: ../index.php?page=space_member&etat=champempty');
+    }
 ?>
