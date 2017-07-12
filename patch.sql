@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:8889
--- Généré le :  Mar 11 Juillet 2017 à 16:48
+-- Généré le :  Mer 12 Juillet 2017 à 16:54
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -81,19 +81,25 @@ CREATE TABLE `sujet` (
   `sujet_titre` varchar(255) NOT NULL,
   `sujet_contenue` text NOT NULL,
   `sujet_date` varchar(8) NOT NULL,
-  `sujet_user_id` int(12) NOT NULL
+  `sujet_user_id` int(12) NOT NULL,
+  `sujet_user_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `sujet`
 --
 
-INSERT INTO `sujet` (`sujet_id`, `sujet_id_sous_categorie`, `sujet_titre`, `sujet_contenue`, `sujet_date`, `sujet_user_id`) VALUES
-(2, 5, 'teste des sujet', 'ceci est un teste afin de remplir le forum est de le design', '10/07/17', 1),
-(3, 5, 'ssalut à tous', '<p>bonjour &agrave; tous comment allez vous ?</p>', '10/07/17', 1),
-(4, 5, 'ssalut à tous', '<p>bonjour &agrave; tous comment allez vous ?</p>', '10/07/17', 1),
-(5, 14, '[TUTO] CSS les sélecteur', '<p>En css il existe diff&eacute;rent s&eacute;lecteurs</p>\r\n<p>en voici quelque-un</p>\r\n<p style=\"padding-left: 30px;\">#div</p>\r\n<p style=\"padding-left: 30px;\">.class</p>\r\n<p style=\"padding-left: 30px;\">:hover</p>', '10/07/17', 1),
-(6, 7, 'tuto javascript', '<p>NONNN !</p>', '10/07/17', 1);
+INSERT INTO `sujet` (`sujet_id`, `sujet_id_sous_categorie`, `sujet_titre`, `sujet_contenue`, `sujet_date`, `sujet_user_id`, `sujet_user_name`) VALUES
+(2, 5, 'teste des sujet', 'ceci est un teste afin de remplir le forum est de le design', '10/07/17', 1, 'zouki'),
+(3, 5, 'ssalut à tous', '<p>bonjour &agrave; tous comment allez vous ?</p>', '10/07/17', 1, 'zouki'),
+(4, 5, 'ssalut à tous', '<p>bonjour &agrave; tous comment allez vous ?</p>', '10/07/17', 1, 'zouki'),
+(5, 14, '[TUTO] CSS les sélecteur', '<p>En css il existe diff&eacute;rent s&eacute;lecteurs</p>\r\n<p>en voici quelque-un</p>\r\n<p style=\"padding-left: 30px;\">#div</p>\r\n<p style=\"padding-left: 30px;\">.class</p>\r\n<p style=\"padding-left: 30px;\">:hover</p>', '10/07/17', 1, 'zouki'),
+(6, 7, 'tuto javascript', '<p>NONNN !</p>', '10/07/17', 1, 'zouki'),
+(7, 17, 'erreur mysql', '<p>salut j\'aurais bien besoin d\'aide</p>', '11/07/17', 1, 'zouki'),
+(8, 5, 'fggg', '<p>fg</p>', '12/07/17', 1, 'zouki'),
+(9, 5, 'nouveau sujet', '<p>ceci est un teste</p>\r\n<p>&nbsp;</p>', '12/07/17', 1, 'zouki'),
+(10, 5, 'salut à tous', '<p>vous allez bien ?</p>', '12/07/17', 1, 'zouki'),
+(11, 5, 'sdfsdfdsfsdfdsfsdfsdfsemsfdmlfkslmdmkfs', '<p>lsqmdmkflmfkseoqfklqfqm&ugrave;flmlsv;ff&ugrave;gssefsg</p>', '12/07/17', 1, 'zouki');
 
 -- --------------------------------------------------------
 
@@ -117,7 +123,9 @@ CREATE TABLE `sujet_response` (
 INSERT INTO `sujet_response` (`msg_id`, `msg_sujet_id`, `msg_contenue`, `msg_date`, `msg_user_id`, `msg_user_name`) VALUES
 (15, 2, '<p>sdfsdf</p>', '11/07/17', 1, 'zouki'),
 (16, 2, '<p>tags,</p>', '11/07/17', 1, 'zouki'),
-(17, 2, '<p>bonjour &agrave; tous cava ?</p>', '11/07/17', 1, 'zouki');
+(17, 2, '<p>bonjour &agrave; tous cava ?</p>', '11/07/17', 1, 'zouki'),
+(18, 8, '<p>salut &agrave; tous</p>', '12/07/17', 1, 'zouki'),
+(19, 11, '<p>sdsfsdlmsdfsdffsddfs</p>', '12/07/17', 1, 'zouki');
 
 -- --------------------------------------------------------
 
@@ -132,6 +140,8 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `path_avatar` varchar(255) NOT NULL,
   `grade` varchar(255) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `reponse` varchar(255) NOT NULL,
   `date_creation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -139,12 +149,14 @@ CREATE TABLE `users` (
 -- Contenu de la table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `path_avatar`, `grade`, `date_creation`) VALUES
-(1, 'zouki', 'admin', 'zouki.dev@gmail.com', 'images/empty_avatar.png', 'superadmin', '07/07/17'),
-(2, 'test', 'test', 'test@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
-(3, 'admin', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
-(5, 'sffsddsf', 'admin', 'admin@gmail.com', 'images/empty_avatar.png', 'user', '07/07/17'),
-(6, 'sqdksqdk', 'ksdqkdkls', 'kskqldklqds', 'images/empty_avatar.png', 'user', '07/07/17');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `path_avatar`, `grade`, `question`, `reponse`, `date_creation`) VALUES
+(1, 'zouki', 'admin', 'zouki.dev@gmail.com', '../styles/images/avatars/1236347_418586364924633_131514909_n.jpg', 'superadmin', 'test', 'test', '07/07/17'),
+(2, 'test', 'test', 'test@gmail.com', '../styles/images/avatars/empty_avatar.png', 'user', '', '', '07/07/17'),
+(3, 'admin', 'admin', 'admin@gmail.com', '../styles/images/avatars/empty_avatar.png', 'user', '', '', '07/07/17'),
+(5, 'sffsddsf', 'admin', 'admin@gmail.com', '../styles/images/avatars/empty_avatar.png', 'user', '', '', '07/07/17'),
+(6, 'sqdksqdk', 'ksdqkdkls', 'kskqldklqds', '../styles/images/avatars/empty_avatar.png', 'user', '', '', '07/07/17'),
+(8, 'zoukilama', 'zoukilama', 'zoukilama@gmail.com', '../styles/images/avatars/empty_avatar.png', 'user', '', '', '12/07/17'),
+(9, 'retest', 'retestretest', 'retest@gmail.com', '../styles/images/avatars/empty_avatar.png', 'user', 'hola', 'need', '12/07/17');
 
 --
 -- Index pour les tables exportées
@@ -202,17 +214,17 @@ ALTER TABLE `sous_categories`
 -- AUTO_INCREMENT pour la table `sujet`
 --
 ALTER TABLE `sujet`
-  MODIFY `sujet_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `sujet_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `sujet_response`
 --
 ALTER TABLE `sujet_response`
-  MODIFY `msg_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `msg_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Contraintes pour les tables exportées
 --

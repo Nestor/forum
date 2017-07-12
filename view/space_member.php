@@ -42,22 +42,32 @@
                         <br>
                         <br>
                         <input type="submit" value="Se connecter">
-
+                        <a href="index.php?page=retrievepassword">Mot de passe oublié ?</a>
                     </form>
+                    
                 </div>
                 <div class="separator"></div>
                 <div class="register">
+                    <?php
+                        if(isset($_GET['etat'])) {
+                            switch($_GET['etat']) {
+                                case "successins":
+                                    echo 'Vous êtes maintenant inscript';
+                                break;
+                                case "errorins":
+                                    echo 'Il y a une erreur vérifier tout les champs';
+                                break;
+                            }
+                        }
+                    ?>
                     <h2>Inscription</h2>
-                    <form action="#" method="post">
-                        <input type="text" name="account" placeholder="Nom de compte" required>
-                        <br>
-                        <input type="password" name="password" placeholder="Mot de passe" required>
-                        <br>
-                        <input type="password" name="passwordconfirm" placeholder="Confirmer mot de passe" required>
-                        <br>
-                        <input type="password" name="email" placeholder="Adresse mail" required>
-                        <br>
-                        <br>
+                    <form action="services/registerService.php" method="post">
+                        <input type="text" name="account" placeholder="Nom de compte" required><br>
+                        <input type="password" name="password" placeholder="Mot de passe" required><br>
+                        <input type="password" name="passwordconfirm" placeholder="Confirmer mot de passe" required><br>
+                        <input type="text" name="email" placeholder="Adresse mail" required><br>
+                        <input type="text" name="question" placeholder="Question secrète"/><br/>
+                        <input type="text" name="response" placeholder="Réponse secrète"/><br/><br/>
                         <input type="submit" value="S'inscrire">
 
                     </form>

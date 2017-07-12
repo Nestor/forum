@@ -34,8 +34,7 @@
             <label>Mot de passe</label>
             <input type="password" name="password"/><br/>
             <label>Adresse mail</label>
-            <input type="text" name="email"/><br/><br/>
-
+            <input type="text" name="email"/><br/>
             <input type="submit" value="S'inscrire" />
             </form>
 

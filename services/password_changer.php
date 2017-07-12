@@ -1,11 +1,30 @@
 <?php
 include '../model/fonctions.php';
 if($_POST['password'] == $_POST['confirmPassword']) {
-    $result = changePasswdfsdford($_POST['id_user'], $_POST['ancienPassword'], $_POST['password']);
-    print_r($result);
+
+    if(strlen($_POST['password']) >= 8){
+        $result = changePassword($_POST['id_user'], $_POST['ancienPassword'], $_POST['password']);
+
+        if(intval($result) >= 1) {
+            header('location: ../index.php?page=profil&etat=successpassword&id='.$_POST['id_user']);
+            die();
+        } else if($result=="difpassword") {
+            // mot de passe différent
+            header('location: ../index.php?page=profil&etat=difpassword&id='.$_POST['id_user']);
+            die();
+        } else {
+            header('location: ../index.php?page=profil&etat=erreurpassword&id='.$_POST['id_user']);
+            die();
+        }
+    } else {
+        header('location: ../index.php?page=profil&etat=lengthpassword&id='.$_POST['id_user']);
+    }
+
+    
+
 } else {
-    /* Alfonso: feedback au user */
-    echo 'Les mot de passe ne sont pas identique';
+    header('location: ../index.php?page=profil&etat=passwordident&id='.$_POST['id_user']);
+    die();
 }
 
 ?>

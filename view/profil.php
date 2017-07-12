@@ -22,28 +22,7 @@
                     </div>
                     <div class="container">
                         <div class="header"><p><?=$utilisateur[0]['username']?></p></div>
-                                <?php
-                                if(isset($_GET['etat'])){
-                                    switch($_GET['etat']) {
-                                        case "error_mail":
-                                        echo 'Veuillez remplir tout les champs<br/>';
-                                        break;
-                                        case "error":
-                                        echo 'Impossible d\'éditer le profil<br/>';
-                                        break;
-
-                                        case "maxsizeavatar":
-                                        echo 'Impossible d\'éditer le profil<br/>';
-                                        break;
-                                        case "erroravatar":
-                                        echo 'Impossible d\'éditer le profil<br/>';
-                                        break;
-                                        case "successavatar":
-                                        echo 'Avatar changer<br/>';
-                                        break;
-                                    }
-                                }
-                                ?>
+                                <?php if(isset($etat)) { echo $etat; } ?>
                                 Email: <?=$utilisateur[0]['email']?><br/>
                                 Compte créer le: <?=$utilisateur[0]['date_creation']?><br/>
                                 Grade: <?=$utilisateur[0]['grade']?>

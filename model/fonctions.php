@@ -1,4 +1,5 @@
 <?php
+    include 'htmlFormater.php';
 
     function getPage(){
         if(isset($_GET['page'])){
@@ -8,6 +9,7 @@
         }
         return $page;
     }
+
     function MYSQLConnexion() {
         try {
             $connexion = new PDO('mysql:host=localhost;port=3306;dbname=forumDB;charset=UTF8', 'root', 'root');
@@ -19,6 +21,7 @@
             die("MYSQL: ".$e->getMessage());
         }
     }
+
     function userConnexion($username, $password){
         $connexion=MYSQLConnexion();
 
@@ -32,6 +35,7 @@
         /***
          * Alfonso: est-ce judicieux de créer un tableau comme ça ici??
          * telle est la question... on en a déjà parler je pense
+         * Melvin: je veut le changer mais je ne sais pas si j'aurais le temps
          */
             if($object->rowCount() >= 1) {
                 if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
@@ -65,16 +69,10 @@
 
          if (!$result == 0) {
              return $user;
-         } else {
-             /*
-              * Alfonso: ce genre de contrôle doit être fait dans le service
-              * et le feedback rapporté au user
-              * */
-             echo 'Aucune données pour ce compte';
          }
     }
 
-    function userRegister($username, $password, $email){
+    function userRegister($username, $password, $email, $question, $reponse){
         $connexion=MYSQLConnexion();
         $date_creation = date("d/m/y");
 
@@ -85,20 +83,20 @@
         ));
 
         if (!$object->rowCount() == 1) {
-            $object = $connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, path_avatar=:avatar, date_creation=:date_create');
+            $object = $connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, path_avatar=:avatar, grade=:grade, question=:quest, reponse=:resp ,date_creation=:date_create');
             $object->execute(array(
                 "username" => $username,
                 "password" => $password,
                 "email" => $email,
-                "avatar" => "images/empty_avatar.png",
+                "avatar" => "../styles/images/avatars/empty_avatar.png",
+                "grade" => "user",
+                "quest" => htmlentities($question),
+                "resp" => htmlentities($reponse),
                 "date_create" => $date_creation
             ));
-            /*
-            * Alfonso: Les redirections doivent être faites dans un service plutot que dans une fonction
-            * */
-            header('location: ../index.php?page=register&etat=success');
+            return "success";
         } else {
-            header('location: ../index.php?page=register&etat=exist');
+            return "error";
         }
     }
 
@@ -126,14 +124,6 @@
                 $formCatArray[$donnees['categorie']][] .= $donnees['id']."#".$donnees['name'];
             }
         }
-        /*
-         * Alfonso: ces fonction qui crée de l'html doivent être dans un template de préférence. Si c'est des bloques qui reviennent
-         * il y a moyen d'en faire des templates également. Ça a plus de sens si on veut jouer avec ces bloques dans les templates
-         * plutot que devoir chercher dans quel fonction est un menu.
-         *
-         * Même observation pour les fonctions successives.
-         * */
-        //print_r($formCatArray);
         $dataHTML = "";
         foreach($formCatArray as $key => $catego) {
             $dataHTML .= '<div class="categorie"><div class="header"><p>'.$key.'</p></div>';
@@ -142,7 +132,7 @@
                 $id_categorie = $resultSousCat[0];
                 $name_categorie = $resultSousCat[1];
 
-                $dataHTML .= '<div class="subject"><div class="name"><a href="index.php?page=sujet&category='.$id_categorie.'">'.$name_categorie.'</a></div></div>';
+                $dataHTML .= sous_category($id_categorie, $name_categorie);
             }
             $dataHTML .= '</div>';
         }
@@ -161,7 +151,7 @@
         $sujetForum = [];
 
         foreach($data as $key => $donnees) {
-            $donneesVar = $donnees['sujet_id'].'#'.$donnees['sujet_titre'].'#'.$donnees['sujet_contenue'].'#'.$donnees['sujet_date'].'#'.$donnees['sujet_user_id'].'#'.$donnees['sujet_id_sous_categorie'];
+            $donneesVar = $donnees['sujet_id'].'#'.$donnees['sujet_titre'].'#'.$donnees['sujet_contenue'].'#'.$donnees['sujet_date'].'#'.$donnees['sujet_user_id'].'#'.$donnees['sujet_id_sous_categorie'].'#'.$donnees['sujet_user_name'];
             if (!in_array($donneesVar, $sujetForum)) {
                 $sujetForum[] .= $donneesVar;
             }
@@ -178,17 +168,9 @@
             $sujet_date = $dataSplited[3];
             $sujet_user_id = $dataSplited[4];
             $sujet_id_sous_categorie = $dataSplited[5];
+            $sujet_user_name = $dataSplited[6];
 
-            $dataHTML .= '
-            
-            <div class="sujet">
-                <div class="name_sujet">
-                    <p><a href="index.php?page=read_sujet&id='.$sujet_id.'">'.$sujet_titre.'</a></p>
-                </div>
-                <div class="date"><p>'.$sujet_date.'</p></div>
-                <div class="user"><p>'.$sujet_user_id.'</p></div>
-            </div>
-            ';
+            $dataHTML .= sujet_line($sujet_id, $sujet_titre, $sujet_date, $sujet_user_name);
         }
         return $dataHTML;
     }
@@ -216,12 +198,7 @@
         // return $data;
         $dataHTML = "";
         foreach($data as $value) {
-            $dataHTML .= '
-            <div class="userline">
-            <div class="username"><a href="index.php?page=profil&id='.$value['id'].'">'.$value['username'].'</a></div>
-            <div class="usergrade">'.$value['grade'].'</div>
-            </div>
-            ';
+            $dataHTML .= userline($value['id'], $value['username'], $value['grade']);
         }
         return $dataHTML;
     }
@@ -237,21 +214,13 @@
 
         $dataHTML = "";
         foreach($data as $value){
-            $dataHTML .= '<div class="responseSujet">
-            <div class="header">
-                <div class="poste_username"><p>Poster par '.$value['msg_user_name'].'</p></div>
-                <div class="poste_date"><p>Le '.$value['msg_date'].'</p></div>
-            </div>
-            <div class="container">
-                <p>'.$value['msg_contenue'].'</p>
-            </div>
-            </div>';
+            $dataHTML .= sujet_response($value['msg_user_name'], $value['msg_date'], $value['msg_contenue']);
         }
         return $dataHTML;
     }
+    
     function GetSujetData($id) {
         $connexion=MYSQLConnexion();
-        // SELECT * FROM sujet INNER JOIN sujet_response ON sujet.sujet_id= sujet_response.msg_sujet_id
         $object = $connexion->prepare('SELECT * FROM sujet WHERE sujet_id=:id');
         $object->execute(array(
             "id" => $id
@@ -260,11 +229,7 @@
 
         $dataHTML = "";
         foreach($data as $value){
-            $dataHTML .= '<div class="sujet">
-            <div class="titre"><p>'.$value['sujet_titre'].' | poster le '.$value['sujet_date'].'</p></div>
-            <div class="container">'.$value['sujet_contenue'].'</div>
-            </div>
-            ';
+            $dataHTML .= sujet($value['sujet_titre'], $value['sujet_date'], $value['sujet_contenue']);
         }
         return $dataHTML;
     }
@@ -323,7 +288,7 @@
         }
     }
 
-    function changePasswdfsdford($id, $lastPassword, $newPassword) {
+    function changePassword($id, $lastPassword, $newPassword) {
         $connexion=MYSQLConnexion();
         $request = $connexion->prepare('SELECT password FROM users WHERE id=:id');
         $request->execute(array(
@@ -332,12 +297,81 @@
         $data = $request->fetch(PDO::FETCH_ASSOC);
 
         if($lastPassword == $data['password']){
-            return "OK";
-            // créer la requete pour changer le mot de passe
-
+            $object = $connexion->prepare('UPDATE users SET password=:password WHERE id=:id');
+            $object->execute(array(
+                "password" => $newPassword,
+                "id" => $id
+            ));
+            return $object->rowCount();
         } else {
-            return "LE MOT DE PASSE NE CORRESPOND PAS A L'ANCIEN ";
+            return "difpassword";
         }
     }
 
+    function retrievePassword($question, $reponse, $username) {
+
+        $connexion=MYSQLConnexion();
+        $object = $connexion->prepare('SELECT question, reponse, username, password FROM users WHERE username=:name');
+
+        $object->execute(array(
+             'name' => $username
+        ));
+
+        $data = $object->fetch(PDO::FETCH_ASSOC);
+        $result = $object->rowCount();
+
+        if($result >= 1) {
+            if($question == $data['question'] && $reponse == $data['reponse']) {
+                return $data['password'];
+            } else {
+                return "error";
+            }
+        } else {
+            return "error";
+        }
+
+    }
+
+    /* erreur code de l'edit profil */
+    function Getetat($errCode){
+        if(isset($errCode)){
+            switch($errCode) {
+                case "error_mail":
+                    return 'Veuillez remplir tout les champs<br/><br/>';
+                break;
+                case "error":
+                    return 'Impossible d\'éditer le profil<br/><br/>';
+                break;
+
+                case "maxsizeavatar":
+                    return 'Impossible d\'éditer le profil<br/><br/>';
+                break;
+                case "erroravatar":
+                    return 'Impossible d\'éditer le profil<br/><br/>';
+                break;
+                case "successavatar":
+                    return 'Avatar changer<br/><br/>';
+                break;
+
+                case "successpassword":
+                    return 'Le mot de passe à était changer<br/><br/>';
+                break;
+                case "difpassword":
+                    return 'L\'ancien mot de passe ne correspond pas<br/><br/>';
+                break;
+                case "erreurpassword":
+                    return 'L\'ancien mot de passe ne correspond pas<br/><br/>';
+                break;
+                case "passwordident":
+                    return 'Les mot de passe ne sont pas identique<br/><br/>';
+                break;
+                case "lengthpassword":
+                    return 'Mot de passe pas assez long<br/><br/>';
+                break;
+                case "invalidmail":
+                    return 'Format de mail invalide<br/><br/>';
+                break;
+            }
+        }
+    }
 ?>

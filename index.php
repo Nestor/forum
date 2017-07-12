@@ -2,8 +2,6 @@
 
 session_start();
 
-
-include_once 'configuration/config.php';
 include_once 'model/fonctions.php';
 $page = getPage();
 
@@ -15,6 +13,9 @@ switch($page) {
     break;
     case "profil":
         $utilisateur = loadUsersProfil($_GET['id']);
+        if(isset($_GET['etat'])){
+            $etat = Getetat($_GET['etat']);
+        }
         include 'view/profil.php';
     break;
     case "register":
@@ -53,6 +54,9 @@ switch($page) {
     case "profil_edit":
         $utilisateur = loadUsersProfil($_GET['id']);
         include 'view/profiledit.php';
+    break;
+    case "retrievepassword":
+        include 'view/search_password.php';
     break;
 }
 ?>

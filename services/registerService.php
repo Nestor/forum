@@ -1,22 +1,47 @@
 <?php
     include '../model/fonctions.php';
-    if (!empty($_POST['account']) && !empty($_POST['password']) && !empty($_POST['email'])) {
+    $etat_username = FALSE;
+    $etat_password = FALSE;
+    $etat_passwordC = FALSE;
+    $etat_mail = FALSE;
 
+    if(strlen($_POST['account']) >= 4 ){
+        $etat_username = TRUE;
+    } else {
+        $etat_username = FALSE;
+    }
+
+    if(strlen($_POST['password']) >= 8){
+        $etat_password = TRUE;
+    } else {
+        $etat_password = FALSE;
+    }
+
+    if($_POST['password'] == $_POST['passwordconfirm']) {
+        $etat_passwordC = TRUE;
+    } else {
+        $etat_passwordC = FALSE;
+    }
+
+    if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $etat_mail = TRUE;
+    } else {
+        $etat_mail = FALSE;
+    }
+
+    if($etat_username == TRUE && $etat_password == TRUE && $etat_passwordC == TRUE && $etat_mail == TRUE) {
         $username = htmlentities($_POST['account']);
         $password = htmlentities($_POST['password']);
         $email = htmlentities($_POST['email']);
-        /*
-         * Alfonso: il faut vérifier l'email avec un regex
-         * il faut vérifier que le mot de passe à au moins 8 caractères
-         * et le username au moins 4 caractères de long
-         * */
 
-        userRegister($username, $password, $email);
-    } else {
-        // Alfonso: essaie de mettre un die après un header même si ici ça n'a pas de sens car il n'y a pas de code après
-        // c'est rare mais les script parfois mette trop de temps à s'executer et après un header() on ne veut pas
-        // que ce qui a derrière s'execute. Donc par reflexe je met un die() toujours après un header()
-        header('location: ../Forum/index.php?page=register&etat=error');
+        $result = userRegister($username, $password, $email, $_POST['question'], $_POST['response']);
+
+        if($result == "success") {
+            header('location: ../index.php?page=space_member&etat=successins');
+            die();
+        } else if($result == "error") {
+            header('location: ../index.php?page=space_member&etat=errorins');
+            die();
+        }
     }
-
 ?>

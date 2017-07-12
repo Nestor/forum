@@ -14,6 +14,7 @@
 
         <!-- Forum container -->
         <div class="container">
+            /!\ EN COURS DE DEV /!\
             <h2>Contact</h2>
             
             <?php if (isset($_SESSION['user'])) { ?>

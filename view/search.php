@@ -14,7 +14,7 @@
 
         <!-- Forum container -->
         <div class="container">
-
+            /!\ EN COURS DE DEV /!\
             <h2>Rechercher un sujet</h2>
             <form action="" method="post">
                 <input type="text" name="value"/><br/>
@@ -34,11 +34,15 @@
                 <input type="submit" value="Rechercher"/>
             </form>
             <hr/>
+
             <h2>Rechercher un membre</h2>
             <form action="" method="post">
                 <input type="text" name="value"/><br/>
                 <input type="submit" value="Rechercher"/>
             </form>
+            <hr>
+
+            <div class="container"></div>
         </div>
         
     </div>

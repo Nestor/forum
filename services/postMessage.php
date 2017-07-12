@@ -14,4 +14,5 @@
     ));
 
     header('location: ../index.php?page=read_sujet&id='.$sujetID);
+    die();
 ?>
