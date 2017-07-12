@@ -5,6 +5,11 @@
         $username = htmlentities($_POST['account']);
         $password = htmlentities($_POST['password']);
         $email = htmlentities($_POST['email']);
+        /*
+         * Alfonso: il faut vérifier l'email avec un regex
+         * il faut vérifier que le mot de passe à au moins 8 caractères
+         * et le username au moins 4 caractères de long
+         * */
 
         userRegister($username, $password, $email);
     } else {

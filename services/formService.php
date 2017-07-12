@@ -1,4 +1,8 @@
 <?php
+/**
+ * Alfonso: Pourquoi on inclus ici un des fonction d'un autre projet?
+ */
+
 include "../20_mvc/model/fonction.php";
 
 if (isset($_POST['msg'])) {

@@ -27,7 +27,12 @@
                 'username' => htmlentities($username)
             ));
             $user = $object->fetchAll(PDO::FETCH_ASSOC);
-            
+
+
+        /***
+         * Alfonso: est-ce judicieux de créer un tableau comme ça ici??
+         * telle est la question... on en a déjà parler je pense
+         */
             if($object->rowCount() >= 1) {
                 if ($user[0]['username'] == $username && $user[0]['password'] == $password) {
                     $tableau = [
