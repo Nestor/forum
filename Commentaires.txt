@@ -1,0 +1,23 @@
+
+
+/***
+* Alfonso: bien dans l'ensemble tu as été productif et esthétiquement le rendu est plaisant
+* Il aurait fallu mettre le switch soit dans un fichier à part soit dans l'index et pas des les fonctions
+* car il faut différencier le contrôleur du modèle.
+*
+* -Je pense que tu as du refactoriser plusieurs fois le projet (fatalement) et donc ceci t'as engendré des problème
+* d'organisation et donc des bugs.
+*
+* -Pour les templates j'aurais utiliser les tag php raccourci <?= $username ?> ainsi que pour la logique php
+* Par exemple: <?php if($something): ?>
+*                 do something
+*              <?php endif; ?>
+*
+* -Aussi quand je me connecte j'atteri dans http://localhost/projetsEcoleDuNum/forum/melvin_forum/index.php?page=space_member&etat=connect
+* Ça aurait été bien d'attérir dans la page du forum ou les sujets sont listés.
+*
+*  - Je pense que tu n'as pas eu le temps: mais les appels en base de données ne doit pas être fait à partir d'un service mais une fonction
+*  - Finalement il ne faut jamais mélanger les vues avec le model (les fonction backend). C'est le principe MVC
+*
+
+* J'ai listé ce qui n'allait pas mais le rendu est bon.

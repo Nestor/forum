@@ -1,4 +1,8 @@
 <?php
+/**
+ * Ne jamais mélanger un HTML avec les fonctions qui sont sensé être le model dans le MVC
+ * l'HTML représente le View qui est donc dissocié  M --> V --> C
+ */
     include 'htmlFormater.php';
 
     function getPage(){
@@ -12,7 +16,7 @@
 
     function MYSQLConnexion() {
         try {
-            $connexion = new PDO('mysql:host=localhost;port=3306;dbname=forumDB;charset=UTF8', 'root', 'root');
+            $connexion = new PDO('mysql:host=localhost;port=3306;dbname=forumDB;charset=UTF8', 'root', '');
             $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $connexion->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
@@ -76,6 +80,10 @@
         $connexion=MYSQLConnexion();
         $date_creation = date("d/m/y");
 
+        /**
+         * Alfonso: Ce contrôle aurait été mieux dans le service et l'appel en base de données
+         * dans une autre fonction getUserByUsername()
+         */
 
         $object = $connexion->prepare('SELECT * FROM users WHERE username=:username');
         $object->execute(array(

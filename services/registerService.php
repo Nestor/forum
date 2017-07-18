@@ -17,6 +17,10 @@
         $etat_password = FALSE;
     }
 
+
+    /**
+     * Alfonso: il te manquait le passwordconfirm dans le formulaire.
+     */
     if($_POST['password'] == $_POST['passwordconfirm']) {
         $etat_passwordC = TRUE;
     } else {
@@ -28,6 +32,11 @@
     } else {
         $etat_mail = FALSE;
     }
+
+/***
+ * Alfonso: On aurait du prévoir un cas de figure ou on a un ces états (qui sont en fait des erreurs)
+ * comme faux il aurait fallu renvoyer un else pour le premier "if"
+ */
 
     if($etat_username == TRUE && $etat_password == TRUE && $etat_passwordC == TRUE && $etat_mail == TRUE) {
         $username = htmlentities($_POST['account']);
