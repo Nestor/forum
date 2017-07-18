@@ -16,6 +16,8 @@
 * -Aussi quand je me connecte j'atteri dans http://localhost/projetsEcoleDuNum/forum/melvin_forum/index.php?page=space_member&etat=connect
 * Ça aurait été bien d'attérir dans la page du forum ou les sujets sont listés.
 *
+*  - J'aurais mis un contrôle de sessions dans l'index également. Par exemple si on est online on ne veut pas voir la page d'inscription
+ et inversement.
 *  - Je pense que tu n'as pas eu le temps: mais les appels en base de données ne doit pas être fait à partir d'un service mais une fonction
 *  - Finalement il ne faut jamais mélanger les vues avec le model (les fonction backend). C'est le principe MVC
 *
